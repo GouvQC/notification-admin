@@ -84,3 +84,8 @@ notify.code-workspace
 schedule-message.html
 
 jinja_templates/
+/.vs
+/env-admin
+/notification-admin.sln
+/notification-admin.pyproj.user
+/notification-admin.pyproj

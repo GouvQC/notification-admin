@@ -8,7 +8,7 @@
 
 {% block meta %} {%
 set description = _('Notify lets you send emails and text messages to your users') %} 
-{% set keywords = _('e-notify, e notify, Enotify, gc notify, notify, canada notify, canada email, email notifications, Government of Canada, federal government, Canada SMS,
+{% set keywords = _('gc notify, notify, canada notify, canada email, email notifications, Government of Canada, federal government, Canada SMS,
 Canada Notification service') %} {% set meta_title = _('GC Notify | GC notification') %}
 <meta name="description" content="{{description}}" />
 <meta name="keywords" content="{{keywords}}" />
@@ -49,17 +49,17 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
 
             {% if session["userlang"] == "en" %} 
               <img
-                alt="Government of Canada / Gouvernement du Canada"
-                width="250"
+                alt="Government of Quebec / Gouvernement du Québec"
+                width="160"
                 class=""
-                src="{{ asset_s3_url('gov-canada-en.svg') }}"
+                src="{{ asset_url('images/homepage/signature-PIV.svg') }}"
               />
             {% else %}
               <img
-                alt="Gouvernement du Canada / Government of Canada"
-                width="250"
+                alt="Gouvernement du Québec / Government of Quebec"
+                width="160"
                 class=""
-                src="{{ asset_s3_url('gov-canada-fr.svg') }}"
+                src="{{ asset_url('images/homepage/signature-PIV.svg') }}"
               />
             {% endif %}
 
@@ -70,7 +70,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
             >
               <i>{{ _("Notify") }}</i>
             </h1>
-            <div class="bg-blue-lighter py-1 px-2 rounded-lg text-small">
+            <div class="py-1 px-2 rounded-lg text-small">
               {{ _("Alpha") }}
             </div>
           </div>
@@ -189,7 +189,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
           <img
             loading="lazy"
             alt="An illustration of a laptop with a message window on the screen and a cellphone with a message and a callout blurb.") }}"
-            src="{{ asset_s3_url('mac-phone.svg') }}"
+            src="{{ asset_url('images/homepage/mac-phone.svg') }}"
             width="350"
           />
         </div>
@@ -214,7 +214,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
               alt="An illustration that shows an example of an email notification. The example is a message confirming that an application was received and outlining next steps in the process."
               width="390"
               class=""
-              src="{{ asset_s3_url('letter-en.svg') }}"
+              src="{{ asset_url('images/homepage/letter-en.svg') }}"
             />
           {% else %}
             <img
@@ -222,7 +222,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
               loading="lazy"
               width="390"
               class=""
-              src="{{ asset_s3_url('letter-fr.svg') }}"
+              src="{{ asset_url('images/homepage/letter-fr.svg') }}"
             />
           {% endif %}
 
@@ -265,7 +265,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
               loading="lazy"
               class="max-w-full md:max-w-xl block align-top lg:hidden"
               width="390"
-              src="{{ asset_s3_url('built4you.svg') }}"
+              src="{{ asset_url('images/homepage/built4you.svg') }}"
 
             />
          {% else %}
@@ -274,7 +274,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
            loading="lazy"
           class="max-w-full md:max-w-xl block align-top lg:hidden"
           width="390"
-           src="{{ asset_s3_url('built4you.svg') }}"
+           src="{{ asset_url('images/homepage/built4you.svg') }}"
         />
          {% endif %}
          </div>
@@ -301,7 +301,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
           width="400"
           class="max-w-full md:max-w-xl block align-top hidden lg:block"
           style="object-fit: contain; object-position: 0% 50%;"
-          src="{{ asset_s3_url('built4you.svg') }}"
+          src="{{ asset_url('images/homepage/built4you.svg') }}"
           />
         </div>
       {% else %}
@@ -311,7 +311,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
         width="400"
         class="max-w-full md:max-w-xl block align-top hidden lg:block"
         style="object-fit: contain; object-position: 0% 50%;"
-        src="{{ asset_s3_url('built4you.svg') }}"
+        src="{{ asset_url('images/homepage/built4you.svg') }}"
         />
       </div>
       {% endif %}
@@ -346,14 +346,14 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
               recipients from a spreadsheet with a mailing list."
               loading="lazy"
               width="400"
-              src="{{ asset_s3_url('recipients-en.svg') }}"
+              src="{{ asset_url('images/homepage/recipients-en.svg') }}"
             />
           {% else %}
             <img
               alt="Illustration montrant comment on peut ajouter des destinataires provenant d'une liste d'envoi dans une feuille Excel."
               loading="lazy"
               width="400"
-              src="{{ asset_s3_url('recipients-fr.svg') }}"
+              src="{{ asset_url('images/homepage/recipients-fr.svg') }}"
             />
           {% endif %}
 
@@ -371,14 +371,14 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
               alt="An illustration that shows how a personalized message template can be created using variables such as name, day of the week and colour."
               loading="lazy"
               width="400"
-              src="{{ asset_s3_url('text-messages-en.svg') }}"
+              src="{{ asset_url('images/homepage/text-messages-en.svg') }}"
             />
           {% else %}
             <img
               alt="Illustration montrant comment un gabarit peut être personnalisé à l'aide de variables comme le nom, le jour et la couleur."
               loading="lazy"
               width="400"
-              src="{{ asset_s3_url('text-messages-fr.svg') }}"
+              src="{{ asset_url('images/homepage/text-messages-fr.svg') }}"
             />
           {% endif %}
 
@@ -396,14 +396,14 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
               alt="An illustration that shows a dashboard with the number of emails and text messages sent and the number that failed to send."
               loading="lazy"
               width="400"
-              src="{{ asset_s3_url('dashboard-en.svg') }}"
+              src="{{ asset_url('images/homepage/dashboard-en.svg') }}"
             />
           {% else %}
             <img
               alt="Illustration d'un tableau de bord montrant le nombre de courriels et de messages texte envoyés ainsi que le nombre de messages dont l'envoi a été un échec."
               loading="lazy"
               width="400"
-              src="{{ asset_s3_url('dashboard-fr.svg') }}"
+              src="{{ asset_url('images/homepage/dashboard-fr.svg') }}"
             />
           {% endif %}
 
@@ -441,7 +441,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
               loading="lazy"
               class="max-w-full md:max-w-xl block align-top lg:hidden"
               width="390"
-              src="{{ asset_s3_url('integrate-1.svg') }}"
+              src="{{ asset_url('images/homepage/integrate-1.svg') }}"
 
             />
          {% else %}
@@ -450,7 +450,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
            loading="lazy"
           class="max-w-full md:max-w-xl block align-top lg:hidden"
           width="390"
-           src="{{ asset_s3_url('integrate-1.svg') }}"
+           src="{{ asset_url('images/homepage/integrate-1.svg') }}"
         />
          {% endif %}
 
@@ -481,7 +481,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
               class="max-w-full md:max-w-xl block align-top hidden lg:block"
               width="400"
               style="object-fit: contain; object-position: 0% 50%;"
-              src="{{ asset_s3_url('integrate-1.svg') }}"
+              src="{{ asset_url('images/homepage/integrate-1.svg') }}"
             />
             {% else %}
             <img
@@ -490,7 +490,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
             class="max-w-full md:max-w-xl block align-top hidden lg:block"
             width="400"
             style="object-fit: contain; object-position: 0% 50%;"
-            src="{{ asset_s3_url('integrate-1.svg') }}"
+            src="{{ asset_url('images/homepage/integrate-1.svg') }}"
           />
           {% endif %}
 
@@ -519,7 +519,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
               width="300"
               style="object-fit: contain; object-position: 0% 30%;"
               class="inline-block pb-10 lg:pb-0 max-w-full md:max-w-xl"
-              src="{{ asset_s3_url('pricing-en.svg') }}"
+              src="{{ asset_url('images/homepage/pricing-en.svg') }}"
             />
 
             {% else %}
@@ -530,7 +530,7 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
             width="300"
             style="object-fit: contain; object-position: 0% 30%;"
             class="inline-block pb-10 lg:pb-0 max-w-full md:max-w-xl"
-            src="{{ asset_s3_url('pricing-fr.svg') }}"
+            src="{{ asset_url('images/homepage/pricing-fr.svg') }}"
           />
 
             {% endif %}
@@ -570,29 +570,6 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
 
     <!-- start section 7 -->
     <!-- end section 7 -->
-
-    <!-- COUNTER -->
-    <div class="bg-gray">
-      <div class="container px-10 py-20 flex flex-col lg:flex-row justify-between">
-          <!-- Box 1-->
-          <div class="flex flex-col items-start justify-end pb-10 lg:pb-0">
-            <div class="text-base font-bold extra-tight font-sans">{{ _("Notify by the numbers") }}</div>
-            <div class="text-xs py-2">{{ _("Since November 2019") }}</div>
-          </div>
-          <!-- Box 2-->
-          <div class="pb-10 lg:pb-0">
-            <div class="text-xxl font-bold leading-none font-sans">{{stats.services_count}}</div>
-            <div class="text-xs py-2">{{ _("services using Notify") }}</div>
-          </div>
-          <!-- Box 3-->
-          <div class="pb-10 lg:pb-0">
-            <div class="text-xxl font-bold leading-none font-sans">{{stats.notification_totals}}</div>
-            <div class="text-xs py-2">{{ _("email notifications sent") }}</div>
-          </div>
-          <!-- end -->
-        </div>
-    </div>
-    <!-- END COUNTER -->
 
     <!-- start section 8 -->
     <div class="bg-blue">
@@ -695,8 +672,8 @@ Canada Notification service') %} {% set meta_title = _('GC Notify | GC notificat
     <div class="container px-10 py-12">
       <div class="flex py-10 justify-end">
         <img
-          alt="Symbol of the Government of Canada / Symbole du gouvernement du Canada"
-          src="{{ asset_s3_url('goc--footer-logo.svg') }}"
+          alt="Symbol of the Government of Quebec / Symbole du gouvernement du Québec"
+          src="{{ asset_url('images/homepage/goc--footer-logo.svg') }}"
           width="150"
         />
       </div>

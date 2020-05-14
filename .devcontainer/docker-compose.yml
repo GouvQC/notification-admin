@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  admin:
+    container_name: pgn-admin
+    build: 
+     context: ..   
+     dockerfile: .devcontainer/Dockerfile
+
+    command: gunicorn -c gunicorn_config.py application
+    environment:
+        - PORT=6012
+    ports: 
+      - "6012:6012"
+

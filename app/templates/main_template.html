@@ -106,11 +106,7 @@
         choose_folders: "{{ _('Choose folders') }}",
         "all_team members" : "{{ _('All team members') }}",
         "choose_team members" : "{{ _('Choose team members') }}",
-        "cancel_upload": "{{ _('Cancel upload') }}",
-        "choose_arbitrary things": "{{ _('Choose arbitrary things') }}",
-        send_now: "{{ _('Send Now') }}",
-        send_later: "{{ _('Schedule') }}"
-
+        "cancel_upload": "{{ _('Cancel upload') }}"
       }; 
 
     </script>
@@ -149,19 +145,19 @@
             {% if session["userlang"] == "en" %} 
               <a href="/">
                 <img
-                  alt="Government of Canada / Gouvernement du Canada"
-                  width="250"
+                  alt="Government of Quebec / Gouvernement du Québec"
+                  width="160"
                   class=""
-                  src="{{ asset_s3_url('gov-canada-en.svg') }}"
+                  src="{{ asset_url('images/homepage/QUEBEC_couleur.svg') }}"
                 />
               </a>
             {% else %}
               <a href="/">
                 <img
-                  alt="Gouvernement du Canada / Government of Canada"
-                  width="250"
+                  alt="Gouvernement du Québec / Government of Quebec"
+                  width="160"
                   class=""
-                  src="{{ asset_s3_url('gov-canada-fr.svg') }}"
+                  src="{{ asset_url('images/homepage/QUEBEC_couleur.svg') }}"
                 />
               </a>
             {% endif %}
@@ -171,9 +167,9 @@
                 <div
                   class="leading-none lg:ml-4 mr-5 lg:pl-5 font-semibold inline-block top-0 text-brand pb-0"
                 >
-                {{ _("<i>Notify</i>") }}
+                  <i>Notify</i>
                 </div>
-                <div class="bg-blue-lighter py-1 px-2 rounded-lg text-small">
+                <div class="py-1 px-2 rounded-lg text-small">
                   {{ _("Alpha") }}
                 </div>
              
@@ -343,7 +339,7 @@
           <div class="flex py-10 justify-end">
             <img
               alt="Symbol of the Government of Canada / Symbole du gouvernement du Canada"
-              src="{{ asset_s3_url('goc--footer-logo.svg') }}"
+              src="{{ asset_url('images/homepage/goc--footer-logo.svg') }}"
               width="150"
             />
           </div>
