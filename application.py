@@ -22,7 +22,7 @@ sentry_sdk.init(
 )
 
 application = Flask('app')
-application.wsgi_app = ProxyFix(application.wsgi_app, x_proto=1)
+application.wsgi_app = ProxyFix(application.wsgi_app,x_proto=1, x_host=1)
 
 create_app(application)
 
