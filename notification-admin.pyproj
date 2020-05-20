@@ -223,6 +223,7 @@
     <Content Include=".coveralls.yml" />
     <Content Include=".devcontainer\docker-compose.yml" />
     <Content Include=".devcontainer\Dockerfile" />
+    <Content Include=".env" />
     <Content Include=".env.enc" />
     <Content Include=".env.enc.aws" />
     <Content Include=".env.example" />
