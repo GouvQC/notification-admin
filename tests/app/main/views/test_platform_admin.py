@@ -249,7 +249,7 @@ def test_should_show_total_on_live_trial_services_pages(
     (
         'main.live_services', (
             '0 courriel sent-dashboard-single Aucun échec',
-            '0 message texte send-dashboard-single Aucun échec'
+            '0 message texte sent-dashboard-single Aucun échec'
         ), 0, 0, "fr"
     ),
     (

@@ -48,7 +48,7 @@ def _folder(name, folder_id=None, parent=None, users_with_permission=None):
     ),
     [
         (
-            'Templates – service one – Notify',
+            'Templates – service one – Notification',
             'Templates',
             [],
             {},
