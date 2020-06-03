@@ -167,16 +167,16 @@ def test_live_trial_services_with_date_filter(
 @pytest.mark.parametrize('endpoint, expected_big_numbers', [
     (
         'main.live_services', (
-            '55 emails sent 5 failed – 5.0%',
-            '110 text messages sent 10 failed – 5.0%',
-            '15 letters sent 3 failed – 20.0%'
+            '55 emails sent-dashboard-plural 5 failed – 5.0%',
+            '110 text-messages sent-dashboard-single 10 failed – 5.0%',
+            '15 letters sent-dashboard-plural 3 failed – 20.0%'
         ),
     ),
     (
         'main.trial_services', (
-            '6 emails sent 1 failed – 10.0%',
-            '11 text messages sent 1 failed – 5.0%',
-            '30 letters sent 10 failed – 33.3%'
+            '6 emails sent-dashboard-plural 1 failed – 10.0%',
+            '11 text-messages sent-dashboard-single 1 failed – 5.0%',
+            '30 letters sent-dashboard-plural 10 failed – 33.3%'
         ),
     ),
 ])
@@ -230,38 +230,38 @@ def test_should_show_total_on_live_trial_services_pages(
 @pytest.mark.parametrize('endpoint, expected_big_numbers_single_plural, n_emails_sent, n_texts_sent, s_lang ', [
     (
         'main.live_services', (
-            '0 emails sent No failures',
-            '0 text messages sent No failures'
+            '0 emails sent-dashboard-single No failures',
+            '0 text-messages sent-dashboard-single No failures'
         ), 0, 0, "en"
     ),
     (
         'main.live_services', (
-            '1 email sent No failures',
-            '1 text message sent No failures'
+            '1 email sent-dashboard-single No failures',
+            '1 text message sent-dashboard-single No failures'
         ), 1, 1, "en"
     ),
     (
         'main.live_services', (
-            '2 emails sent No failures',
-            '2 text messages sent No failures'
+            '2 emails sent-dashboard-plural No failures',
+            '2 text-messages sent-dashboard-single No failures'
         ), 2, 2, "en"
     ),
     (
         'main.live_services', (
-            '0 courriel envoyé Aucun échec',
-            '0 message texte envoyé Aucun échec'
+            '0 courriel sent-dashboard-single Aucun échec',
+            '0 message texte send-dashboard-single Aucun échec'
         ), 0, 0, "fr"
     ),
     (
         'main.live_services', (
-            '1 courriel envoyé Aucun échec',
-            '1 message texte envoyé Aucun échec'
+            '1 courriel sent-dashboard-single Aucun échec',
+            '1 message texte sent-dashboard-single Aucun échec'
         ), 1, 1, "fr"
     ),
     (
         'main.live_services', (
-            '2 courriels envoyés Aucun échec',
-            '2 messages textes envoyé Aucun échec'
+            '2 courriels sent-dashboard-plural Aucun échec',
+            '2 text-messages sent-dashboard-single Aucun échec'
         ), 2, 2, "fr"
     ),
 ])

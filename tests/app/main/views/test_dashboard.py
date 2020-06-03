@@ -546,7 +546,7 @@ def test_should_show_redirect_from_template_history(
 @pytest.mark.parametrize('extra_args, template_label', [
     ({}, 'Text message template '),
     ({'year': '2016'}, 'Text message template '),
-    ({'lang': 'fr'}, 'Gabarit message texte '),
+    ({'lang': 'fr'}, 'Modèle message texte '),
 ])
 def test_should_show_monthly_breakdown_of_template_usage(
     client_request,
@@ -604,7 +604,7 @@ def test_monthly_shows_letters_in_breakdown(
     columns = page.select('.table-field-left-aligned .big-number-label')
 
     assert normalize_spaces(columns[0].text) == 'emails'
-    assert normalize_spaces(columns[1].text) == 'text messages'
+    assert normalize_spaces(columns[1].text) == 'text-messages'
 
 
 def test_monthly_has_equal_length_tables(
@@ -757,8 +757,8 @@ def test_correct_font_size_for_big_numbers(
             'sms': {'requested': 0, 'delivered': 0, 'failed': 0}
         },
         (
-            '0 emails sent No failures',
-            '0 text messages sent No failures'
+            '0 emails sent-dashboard-single No failures',
+            '0 text-messages sent-dashboard-single No failures'
         ),
         "en"
     ),
@@ -769,8 +769,8 @@ def test_correct_font_size_for_big_numbers(
             'sms': {'requested': 0, 'delivered': 0, 'failed': 0}
         },
         (
-            '0 courriel envoyé Aucun échec',
-            '0 message texte envoyé Aucun échec'
+            '0 courriel sent-dashboard-single Aucun échec',
+            '0 message texte sent-dashboard-single Aucun échec'
         ),
         "fr"
     ),
@@ -781,8 +781,8 @@ def test_correct_font_size_for_big_numbers(
             'sms': {'requested': 1, 'delivered': 1, 'failed': 0}
         },
         (
-            '1 email sent No failures',
-            '1 text message sent No failures'
+            '1 email sent-dashboard-single No failures',
+            '1 text message sent-dashboard-single No failures'
         ),
         "en"
     ),
@@ -793,8 +793,8 @@ def test_correct_font_size_for_big_numbers(
             'sms': {'requested': 1, 'delivered': 1, 'failed': 0}
         },
         (
-            '1 courriel envoyé Aucun échec',
-            '1 message texte envoyé Aucun échec'
+            '1 courriel sent-dashboard-single Aucun échec',
+            '1 message texte sent-dashboard-single Aucun échec'
         ),
         "fr"
     ),
@@ -805,8 +805,8 @@ def test_correct_font_size_for_big_numbers(
             'sms': {'requested': 2, 'delivered': 2, 'failed': 0}
         },
         (
-            '2 emails sent No failures',
-            '2 text messages sent No failures'
+            '2 emails sent-dashboard-plural No failures',
+            '2 text-messages sent-dashboard-single No failures'
         ),
         "en"
     ),
@@ -817,8 +817,8 @@ def test_correct_font_size_for_big_numbers(
             'sms': {'requested': 2, 'delivered': 2, 'failed': 0}
         },
         (
-            '2 courriels envoyés Aucun échec',
-            '2 messages textes envoyé Aucun échec'
+            '2 courriels sent-dashboard-plural Aucun échec',
+            '2 text-messages sent-dashboard-single Aucun échec'
         ),
         "fr"
     ),
