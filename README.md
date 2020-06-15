@@ -100,11 +100,15 @@ A sane set of defaults exists in `.env.example`
 
 `make generate-version-file`
 
-12.  Run the service
+12. Generate the translations
+
+`make babel`
+
+13.  Run the service
 
 `flask run -p 6012 --host=0.0.0.0`
 
-13. To test
+14. To test
 
 `pip3 install -r requirements_for_test.txt`
 
@@ -188,15 +192,12 @@ let now_txt = window.polyglot.t("now");
 
 - Extract
 
-```bash
-pybabel extract -F babel.cfg -k _l -o messages.pot .
-pybabel update -i messages.pot -d app/translations
-```
+Currently this is a manual step. Add a row to en.csv and fr.csv in app/translations/csv/ for each new string you have wrapped. The format is: `"wrapped string","translation"`. Make sure the wrapped string you are adding is unique.
 
 - Compile 
 
 ```bash
-pybabel compile -d app/translations
+make babel
 ```
 
 ## Using Local Jinja for testing template changes

@@ -15,6 +15,21 @@ window.formatAllDates = function () {
     }
   });
 
+  $(".local-datetime-short-year").each(function(index) {
+    let datetime = new Date($(this).text().trim());
+    let locale = window.APP_LANG == "fr" ? "fr-CA" : "en-US";
+  
+    if (datetime instanceof Date && !isNaN(datetime)) {
+      $(this).text(
+        datetime.toLocaleString(locale, {
+          month: "short",
+          day: "numeric",
+          year: "numeric"
+        })
+      );
+    }
+  });
+
   $(".local-datetime-full").each(function(index) {
     let datetime = new Date($(this).text().trim());
     let locale = window.APP_LANG == "fr" ? "fr-CA" : "en-US";
@@ -47,8 +62,6 @@ window.formatAllDates = function () {
       $(this).text(`${dayStr}, ${timeStr}`);
     }
   });
-
-  $(() => $("time.timeago").timeago());
 
 }
 

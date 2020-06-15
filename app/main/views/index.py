@@ -22,6 +22,7 @@ from app import (
 from app.main import main
 from app.main.forms import (
     ContactNotifyTeam,
+    FieldWithLanguageOptions,
     FieldWithNoneOption,
     SearchByNameForm,
 )
@@ -139,22 +140,34 @@ def design_content():
 
 @main.route('/_email')
 def email_template():
-    branding_type = 'govuk'
+    branding_type = 'fip_english'
     branding_style = request.args.get('branding_style', None)
 
-    if branding_style == FieldWithNoneOption.NONE_OPTION_VALUE:
+    if (branding_style == FieldWithLanguageOptions.ENGLISH_OPTION_VALUE
+       or branding_style == FieldWithLanguageOptions.FRENCH_OPTION_VALUE):
+        if branding_style == FieldWithLanguageOptions.FRENCH_OPTION_VALUE:
+            branding_type = 'fip_french'
         branding_style = None
 
     if branding_style is not None:
         email_branding = email_branding_client.get_email_branding(branding_style)['email_branding']
         branding_type = email_branding['brand_type']
 
-    if branding_type == 'govuk':
+    if branding_type == 'fip_english':
         brand_text = None
         brand_colour = None
         brand_logo = None
-        govuk_banner = True
-        brand_banner = False
+        fip_banner_english = True
+        fip_banner_french = False
+        logo_with_background_colour = False
+        brand_name = None
+    elif branding_type == 'fip_french':
+        brand_text = None
+        brand_colour = None
+        brand_logo = None
+        fip_banner_english = False
+        fip_banner_french = True
+        logo_with_background_colour = False
         brand_name = None
     else:
         colour = email_branding['colour']
@@ -162,8 +175,9 @@ def email_template():
         brand_colour = colour
         brand_logo = ('https://{}/{}'.format(get_logo_cdn_domain(), email_branding['logo'])
                       if email_branding['logo'] else None)
-        govuk_banner = branding_type in ['govuk', 'both']
-        brand_banner = branding_type == 'org_banner'
+        fip_banner_english = branding_type in ['fip_english', 'both_english']
+        fip_banner_french = branding_type in ['fip_french', 'both_french']
+        logo_with_background_colour = branding_type == 'custom_logo_with_background_colour'
         brand_name = email_branding['name']
 
     template = {
@@ -213,11 +227,12 @@ def email_template():
     else:
         resp = make_response(str(HTMLEmailTemplate(
             template,
-            govuk_banner=govuk_banner,
+            fip_banner_english=fip_banner_english,
+            fip_banner_french=fip_banner_french,
             brand_text=brand_text,
             brand_colour=brand_colour,
             brand_logo=brand_logo,
-            brand_banner=brand_banner,
+            logo_with_background_colour=logo_with_background_colour,
             brand_name=brand_name,
         )))
 

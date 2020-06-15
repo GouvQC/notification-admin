@@ -33,7 +33,7 @@
           {{ _('Your file has too many rows') }}
         </h1>
         <p>
-          {{ _('Notification can process up to') }}
+          {{ _('<i>Notify</i> can process up to') }}
           {{ "{:,}".format(recipients.max_rows) }} {{ _('rows at once. Your
           file has')}} {{ "{:,}".format(recipients|length) }} {{ _('rows.') }}
         </p>
@@ -223,6 +223,6 @@
   {% endif %}
 
   <h2 class="heading-medium">{{ _('Preview of') }} {{ template.name }}</h2>
-  {{ template|string }}
+  {{ template|string|translate_preview_template }}
 
 {% endblock %}

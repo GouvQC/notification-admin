@@ -15,19 +15,19 @@
 {% endmacro %}
 
 {% block service_page_title %}
-  {{ "Preview of {}".format(template.name) }}
+  {{ _("Preview of") + " " + template.name }}
 {% endblock %}
 
 {% block maincolumn_content %}
 
   {{ page_header(
-    'Preview of {}'.format(template.name),
+    _('Preview of') + " " + template.name,
     back_link=back_link
   ) }}
 
   {{ skip_to_file_contents() }}
 
-  {{ template|string }}
+  {{ template|string|translate_preview_template }}
 
   {% if not request.args.from_test %}
   <h2 class="heading-medium">{{ _('Recipients') }}</h2>
@@ -90,7 +90,7 @@
       <div id="schedule-send-at" class="hidden"></div>
 
       {% if template.template_type != 'letter' or not request.args.from_test %}
-      <button type="submit" class="button" id="submit-button">{{ _('Send Now') }}</button>
+      <button type="submit" class="button" id="submit-button">{{ _('Send now') }}</button>
       {% else %}
         <a href="{{ url_for('main.check_messages_preview', service_id=current_service.id, template_id=template.id, upload_id=upload_id, filetype='pdf') }}" download class="button">{{ _('Download as a PDF') }}</a>
       {% endif %}

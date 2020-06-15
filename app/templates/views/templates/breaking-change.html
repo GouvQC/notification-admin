@@ -7,25 +7,25 @@
 {% from "components/form.html" import form_wrapper %}
 
 {% block service_page_title %}
-  Confirm changes
+  {{ _('Confirm changes') }}
 {% endblock %}
 
 {% block maincolumn_content %}
 
   {{ page_header(
-    'Confirm changes',
+    _('Confirm changes'),
     back_link=url_for(".edit_service_template", service_id=current_service.id, template_id=new_template.id)
   ) }}
 
   <div class="bottom-gutter">
     {% if template_change.placeholders_removed %}
       <p>
-        You removed {{ list_of_placeholders(template_change.placeholders_removed) }}
+        {{ _('You removed') + list_of_placeholders(template_change.placeholders_removed) }}
       </p>
     {% endif %}
     {% if template_change.placeholders_added %}
       <p>
-        You added {{ list_of_placeholders(template_change.placeholders_added) }}
+        {{ _('You added') + list_of_placeholders(template_change.placeholders_added) }}
       </p>
     {% endif %}
   </div>
@@ -37,13 +37,13 @@
     <input type="hidden" name="template_id" value="{{ new_template.id }}" />
 
     <input type="hidden" name="confirm" value="true" />
-    {{ page_footer('Save changes to template') }}
+    {{ page_footer(_('Save changes to template')) }}
   {% endcall %}
 
   <p>
-    When you send messages using this template you’ll need
+    {{ _('When you send messages using this template you’ll need') }}
     {{ column_headings|length }}
-    column{{ 's' if column_headings|length > 1 else '' }} of data:
+    {{ _('columns of data:') if column_headings|length > 1 else _('column of data:') }}
   </p>
 
   <div class="spreadsheet fullscreen-content" data-module="fullscreen-table"">
@@ -64,6 +64,6 @@
     {% endcall %}
   </div>
 
-  <p class="top-gutter">Developers, you’ll need to update your API calls</p>
+  <p class="top-gutter">{{ _('Developers, you’ll need to update your API calls') }}</p>
 
 {% endblock %}

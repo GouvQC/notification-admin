@@ -1,13 +1,15 @@
 import itertools
 import os
+import re
 import urllib
 from datetime import datetime, timedelta, timezone
 from functools import partial
 from numbers import Number
 from time import monotonic
 
-import ago
+import timeago
 from flask import (
+    Markup,
     current_app,
     flash,
     g,
@@ -358,22 +360,33 @@ def _format_datetime_short(datetime):
     return datetime.strftime('%d %B').lstrip('0')
 
 
-def format_delta(date):
-    delta = (
-        datetime.now(timezone.utc)
-    ) - (
-        utc_string_to_aware_gmt_datetime(date)
-    )
-    if delta < timedelta(seconds=30):
-        return "just now"
-    if delta < timedelta(seconds=60):
-        return "in the last minute"
-    return ago.human(
-        delta,
-        future_tense='{} from now',  # No-one should ever see this
-        past_tense='{} ago',
-        precision=1
-    )
+def format_delta(_date):
+    lang = get_current_locale(current_app)
+    date = utc_string_to_aware_gmt_datetime(_date)
+    now = datetime.now(timezone.utc)
+    return timeago.format(date, now, lang)
+
+
+def translate_preview_template(_template_str):
+    translate = {
+        "From": _("From"),
+        "To": _("To"),
+        "Subject": _("Subject"),
+        "Reply to": _("Reply to"),
+        "From:": _("From:"),
+        "To:": _("To:")
+    }
+
+    def translate_brackets(x):
+        g = x.group(0)
+        english = g[1:-1]  # drop brackets
+        if english not in translate:
+            return english
+        return translate[english]
+
+    # this regex finds test inside []
+    template_str = re.sub(r"\[[^]]*\]", translate_brackets, _template_str)
+    return Markup(template_str)
 
 
 def format_thousands(value):
@@ -406,7 +419,7 @@ def format_notification_status(status, template_type):
             'failed': _('Failed'),
             'technical-failure': _('Technical failure'),
             'temporary-failure': _('Inbox not accepting messages right now'),
-            'permanent-failure': _('Email address doesn’t exist'),
+            'permanent-failure': _('Email address does not exist'),
             'delivered': _('Delivered'),
             'sending': _('Sending'),
             'created': _('Sending'),
@@ -415,8 +428,8 @@ def format_notification_status(status, template_type):
         'sms': {
             'failed': _('Failed'),
             'technical-failure': _('Technical failure'),
-            'temporary-failure': _('Phone not accepting messages right now'),
-            'permanent-failure': _('Phone number doesn’t exist'),
+            'temporary-failure': _('Phone number not accepting messages right now'),
+            'permanent-failure': _('Phone number does not exist'),
             'delivered': _('Delivered'),
             'sending': _('Sending'),
             'created': _('Sending'),
@@ -445,7 +458,7 @@ def format_notification_status(status, template_type):
 
 def format_notification_status_as_time(status, created, updated):
     return dict.fromkeys(
-        {'created', 'pending', 'sending'}, ' since <span class="local-datetime-short">{}</span>'.format(created)
+        {'created', 'pending', 'sending'}, ' ' + _('since') + ' <span class="local-datetime-short">{}</span>'.format(created)
     ).get(status, '<span class="local-datetime-short">{}</span>'.format(updated))
 
 
@@ -494,6 +507,29 @@ def format_notification_status_as_url(status, notification_type):
         'email': url(_anchor='email-statuses'),
         'sms': url(_anchor='sms-statuses')
     }.get(notification_type)
+
+
+def get_and_n_more_text(number_of_addresses):
+    "number_of_addresses could be email addresses or sms sending numbers"
+    number_of_hidden_addresses = number_of_addresses - 1
+    if number_of_hidden_addresses < 1:
+        # This should never happen - this function is not
+        # called in this case.
+        return _('…and 0 more')
+    if number_of_hidden_addresses == 1:
+        return _('…and 1 more')
+    if number_of_hidden_addresses > 1:
+        return _('…and {} more').format(number_of_hidden_addresses)
+
+
+def get_csv_upload_text(template_type):
+    if template_type == "email":
+        return _('Upload a list of email addresses')
+    elif template_type == "sms":
+        return _('Upload a list of phone numbers')
+    else:
+        # no one should ever see this
+        return _('Upload a list of recipients')
 
 
 def nl2br(value):
@@ -649,7 +685,7 @@ def register_errorhandlers(application):  # noqa (C901 too complex)
     @application.errorhandler(BadSignature)
     def handle_bad_token(error):
         # if someone has a malformed token
-        flash('There’s something wrong with the link you’ve used.')
+        flash(_('There’s something wrong with the link you’ve used.'))
         return _error_response(404)
 
     @application.errorhandler(CSRFError)
@@ -720,12 +756,15 @@ def add_template_filters(application):
         format_date_short,
         format_datetime_relative,
         format_delta,
+        translate_preview_template,
         format_notification_status,
         format_notification_type,
         format_notification_status_as_time,
         format_notification_status_as_field_status,
         format_notification_status_as_url,
         formatted_list,
+        get_and_n_more_text,
+        get_csv_upload_text,
         nl2br,
         format_phone_number_human_readable,
         format_thousands,

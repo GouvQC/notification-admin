@@ -1,6 +1,7 @@
 from collections import OrderedDict
 
 from flask import flash, redirect, render_template, request, session, url_for
+from flask_babel import _
 from flask_login import current_user
 from notifications_python_client.errors import HTTPError
 from werkzeug.exceptions import abort
@@ -16,6 +17,7 @@ from app import (
 from app.main import main
 from app.main.forms import (
     ConfirmPasswordForm,
+    FieldWithLanguageOptions,
     GoLiveNotesForm,
     InviteOrgUserForm,
     NewOrganisationForm,
@@ -104,8 +106,7 @@ def invite_org_user(org_id):
             org_id,
             email_address
         )
-
-        flash('Invite sent to {}'.format(invited_org_user.email_address), 'default_with_tick')
+        flash('{} {}'.format(_('Invite sent to'), invited_org_user.email_address), 'default_with_tick')
         return redirect(url_for('.manage_org_users', org_id=org_id))
 
     return render_template(
@@ -145,7 +146,7 @@ def remove_user_from_organisation(org_id, user_id):
             org_id=org_id
         ))
 
-    flash('Are you sure you want to remove {}?'.format(user.name), 'remove')
+    flash('{} {}?'.format(_('Are you sure you want to remove'), user.name), 'remove')
     return render_template(
         'views/organisations/organisation/users/user/index.html',
         user=user,
@@ -164,7 +165,9 @@ def cancel_invited_org_user(org_id, invited_user_id):
 @user_is_platform_admin
 def organisation_settings(org_id):
 
-    email_branding = 'GOV.UK'
+    email_branding = ('French Government of Canada signature' if
+                      current_organisation.default_branding_is_french is True
+                      else 'English Government of Canada signature')
 
     if current_organisation.email_branding_id:
         email_branding = email_branding_client.get_email_branding(
@@ -295,9 +298,17 @@ def edit_organisation_email_branding(org_id):
 
     email_branding = email_branding_client.get_all_email_branding()
 
+    current_branding = current_organisation.email_branding_id
+
+    # organizations don't support multi language yet / we aren't using organizations
+    if current_branding is None:
+        current_branding = (FieldWithLanguageOptions.FRENCH_OPTION_VALUE if
+                            current_organisation.default_branding_is_french is True else
+                            FieldWithLanguageOptions.ENGLISH_OPTION_VALUE)
+
     form = SetEmailBranding(
         all_branding_options=get_branding_as_value_and_label(email_branding),
-        current_branding=current_organisation.email_branding_id,
+        current_branding=current_branding,
     )
 
     if form.validate_on_submit():
@@ -319,14 +330,27 @@ def edit_organisation_email_branding(org_id):
 def organisation_preview_email_branding(org_id):
 
     branding_style = request.args.get('branding_style', None)
-
     form = PreviewBranding(branding_style=branding_style)
 
+    default_branding_is_french = None
+
+    if form.branding_style.data == FieldWithLanguageOptions.ENGLISH_OPTION_VALUE:
+        default_branding_is_french = False
+    elif form.branding_style.data == FieldWithLanguageOptions.FRENCH_OPTION_VALUE:
+        default_branding_is_french = True
+
     if form.validate_on_submit():
-        organisations_client.update_organisation(
-            org_id,
-            email_branding_id=form.branding_style.data
-        )
+        if default_branding_is_french is not None:
+            organisations_client.update_organisation(
+                org_id,
+                email_branding_id=None,
+                default_branding_is_french=default_branding_is_french
+            )
+        else:
+            organisations_client.update_organisation(
+                org_id,
+                email_branding_id=form.branding_style.data
+            )
         return redirect(url_for('.organisation_settings', org_id=org_id))
 
     return render_template(

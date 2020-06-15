@@ -4,6 +4,7 @@ import time
 import pwnedpasswords
 from flask import current_app
 from flask_babel import _
+from flask_babel import lazy_gettext as _l
 from notifications_utils.field import Field
 from notifications_utils.recipients import (
     InvalidEmailError,
@@ -54,7 +55,7 @@ class CsvFileValidator:
 
     def __call__(self, form, field):
         if not Spreadsheet.can_handle(field.data.filename):
-            raise ValidationError("{} {}".format(field.data.filename, _("isn’t a spreadsheet that Notification can read")))
+            raise ValidationError("{} {}".format(field.data.filename, _("is not a spreadsheet that Notify can read")))
 
 
 class ValidGovEmail:
@@ -79,7 +80,7 @@ class ValidGovEmail:
 class ValidEmail(Email):
 
     def __init__(self):
-        super().__init__(_('Enter a valid email address'))
+        super().__init__(_l('Enter a valid email address'))
 
     def __call__(self, form, field):
 
@@ -96,7 +97,7 @@ class ValidEmail(Email):
 
 class NoCommasInPlaceHolders:
 
-    def __init__(self, message=_('You can’t put commas between double brackets')):
+    def __init__(self, message=_('You cannot put commas between double brackets')):
         self.message = message
 
     def __call__(self, form, field):

@@ -61,12 +61,12 @@ def mock_get_service_settings_page_common(
 
         'Label Value Action',
         'Service name Test Service Change',
-        'Sign-in method Text message code Change',
+        'Login method Text message code Change',
 
         'Label Value Action',
         'Send emails On Change',
         'Reply-to email addresses Not set Manage',
-        'Email branding default Change',
+        'Email branding English Government of Canada signature Change',
 
         'Label Value Action',
         'Send text messages On Change',
@@ -80,12 +80,12 @@ def mock_get_service_settings_page_common(
 
         'Label Value Action',
         'Service name Test Service Change',
-        'Sign-in method Text message code Change',
+        'Login method Text message code Change',
 
         'Label Value Action',
         'Send emails On Change',
         'Reply-to email addresses Not set Manage',
-        'Email branding default Change',
+        'Email branding English Government of Canada signature Change',
 
         'Label Value Action',
         'Send text messages On Change',
@@ -98,8 +98,9 @@ def mock_get_service_settings_page_common(
         'Live Off Change',
         'Count in list of live services Yes Change',
         'Organisation Test Organisation Central government Change',
+        'Daily message limit 1,000 Change',
         'Free text message allowance 250,000 Change',
-        'Email branding default Change',
+        'Email branding English Government of Canada signature Change',
         'Letter branding Not set Change',
         'Data retention email Change',
         'Receive inbound SMS Off Change',
@@ -190,7 +191,7 @@ def test_organisation_name_links_to_org_dashboard(
     (['email', 'sms', 'inbound_sms', 'international_sms'], [
 
         'Service name service one Change',
-        'Sign-in method Text message code Change',
+        'Login method Text message code Change',
 
         'Label Value Action',
         'Send emails On Change',
@@ -208,7 +209,7 @@ def test_organisation_name_links_to_org_dashboard(
     (['email', 'sms', 'email_auth'], [
 
         'Service name service one Change',
-        'Sign-in method Email link or text message code Change',
+        'Login method Email link or text message code Change',
 
         'Label Value Action',
         'Send emails On Change',
@@ -1402,7 +1403,7 @@ def test_should_redirect_after_request_to_go_live(
     )
 
     assert normalize_spaces(page.select_one('.banner-default').text) == (
-        'Thanks for your request to go live. We’ll get back to you within one working day.'
+        'Thank you for your request to go live. We’ll get back to you within one working day.'
     )
     assert normalize_spaces(page.select_one('h1').text) == (
         'Settings'
@@ -1939,7 +1940,7 @@ def test_remove_default_from_default_letter_contact_block(
     (
         'main.service_email_reply_to',
         no_reply_to_email_addresses,
-        'You haven’t added any reply-to email addresses yet'
+        'You have not added any reply-to email addresses yet'
     ),
     (
         'main.service_letter_contact_details',
@@ -1949,7 +1950,7 @@ def test_remove_default_from_default_letter_contact_block(
     (
         'main.service_sms_senders',
         no_sms_senders,
-        'You haven’t added any text message senders yet'
+        'You have not added any text message senders yet'
     ),
 ])
 def test_no_senders_message_shows(
@@ -1973,7 +1974,7 @@ def test_no_senders_message_shows(
 
 
 @pytest.mark.parametrize('reply_to_input, expected_error', [
-    ('', 'Can’t be empty'),
+    ('', 'This cannot be empty'),
     ('testtest', 'Enter a valid email address'),
 ])
 def test_incorrect_reply_to_email_address_input(
@@ -1993,7 +1994,7 @@ def test_incorrect_reply_to_email_address_input(
 
 
 @pytest.mark.parametrize('contact_block_input, expected_error', [
-    ('', 'Can’t be empty'),
+    ('', 'This cannot be empty'),
     ('1 \n 2 \n 3 \n 4 \n 5 \n 6 \n 7 \n 8 \n 9 \n 0 \n a', 'Contains 11 lines, maximum is 10')
 ])
 def test_incorrect_letter_contact_block_input(
@@ -2015,7 +2016,7 @@ def test_incorrect_letter_contact_block_input(
 @pytest.mark.parametrize('sms_sender_input, expected_error', [
     ('elevenchars', None),
     ('11 chars', None),
-    ('', 'Can’t be empty'),
+    ('', 'This cannot be empty'),
     ('abcdefghijkhgkg', 'Enter 11 characters or fewer'),
     (r' ¯\_(ツ)_/¯ ', 'Use letters and numbers only'),
     ('blood.co.uk', None),
@@ -2916,6 +2917,7 @@ def test_service_set_letter_branding_platform_admin_only(
     )
 
 
+@pytest.mark.skip(reason="feature not in use")
 @pytest.mark.parametrize('selected_letter_branding, expected_post_data', [
     (str(UUID(int=1)), str(UUID(int=1))),
     ('__NONE__', None),
@@ -2932,6 +2934,7 @@ def test_service_set_letter_branding_platform_admin_only(
         'main.organisation_preview_letter_branding',
     ),
 ))
+@pytest.mark.skip(reason="feature not in use")
 def test_service_set_letter_branding_redirects_to_preview_page_when_form_submitted(
     client_request,
     platform_admin_user,
@@ -2958,6 +2961,7 @@ def test_service_set_letter_branding_redirects_to_preview_page_when_form_submitt
     )
 
 
+@pytest.mark.skip(reason="feature not in use")
 @pytest.mark.parametrize('endpoint, extra_args', (
     (
         'main.service_preview_letter_branding',
@@ -2987,6 +2991,7 @@ def test_service_preview_letter_branding_shows_preview_letter(
     assert page.find('iframe')['src'] == url_for('main.letter_template', branding_style='hm-government')
 
 
+@pytest.mark.skip(reason="feature not in use")
 @pytest.mark.parametrize('selected_letter_branding, expected_post_data', [
     (str(UUID(int=1)), str(UUID(int=1))),
     ('__NONE__', None),
@@ -3048,15 +3053,17 @@ def test_service_preview_letter_branding_saves(
 
 
 @pytest.mark.parametrize('current_branding, expected_values, expected_labels', [
-    (None, [
-        '__NONE__', '1', '2', '3', '4', '5',
+    ('__FIP-EN__', [
+        '__FIP-EN__', '__FIP-FR__', '1', '2', '3', '4', '5',
     ], [
-        'GOV.UK', 'org 1', 'org 2', 'org 3', 'org 4', 'org 5'
+        'English Government of Canada signature', 'French Government of Canada signature',
+        'org 1', 'org 2', 'org 3', 'org 4', 'org 5'
     ]),
     ('5', [
-        '5', '__NONE__', '1', '2', '3', '4',
+        '5', '__FIP-EN__', '__FIP-FR__', '1', '2', '3', '4',
     ], [
-        'org 5', 'GOV.UK', 'org 1', 'org 2', 'org 3', 'org 4',
+        'org 5', 'English Government of Canada signature', 'French Government of Canada signature',
+        'org 1', 'org 2', 'org 3', 'org 4',
     ]),
 ])
 @pytest.mark.parametrize('endpoint, extra_args', (
@@ -3100,7 +3107,7 @@ def test_should_show_branding_styles(
         page.find('label', attrs={"for": branding_style_choices[idx]['id']}).get_text().strip()
         for idx, element in enumerate(branding_style_choices)]
 
-    assert len(branding_style_choices) == 6
+    assert len(branding_style_choices) == 7
 
     for index, expected_value in enumerate(expected_values):
         assert branding_style_choices[index]['value'] == expected_value
@@ -3114,6 +3121,7 @@ def test_should_show_branding_styles(
     assert 'checked' not in branding_style_choices[3].attrs
     assert 'checked' not in branding_style_choices[4].attrs
     assert 'checked' not in branding_style_choices[5].attrs
+    assert 'checked' not in branding_style_choices[6].attrs
 
     app.email_branding_client.get_all_email_branding.assert_called_once_with()
     app.service_api_client.get_service.assert_called_once_with(service_one['id'])
@@ -3146,7 +3154,7 @@ def test_should_send_branding_and_organisations_to_preview(
     client_request.post(
         endpoint,
         data={
-            'branding_type': 'org',
+            'branding_type': 'custom_logo',
             'branding_style': '1'
         },
         _expected_status=302,
@@ -3182,8 +3190,8 @@ def test_should_preview_email_branding(
     client_request.login(platform_admin_user)
     page = client_request.get(
         endpoint,
-        branding_type='org',
-        branding_style='1',
+        branding_type='custom_logo',
+        branding_style='2',
         **extra_args
     )
 
@@ -3191,14 +3199,15 @@ def test_should_preview_email_branding(
     iframeURLComponents = urlparse(iframe['src'])
     iframeQString = parse_qs(iframeURLComponents.query)
 
-    assert page.find('input', attrs={"id": "branding_style"})['value'] == '1'
+    assert page.find('input', attrs={"id": "branding_style"})['value'] == '2'
     assert iframeURLComponents.path == '/_email'
-    assert iframeQString['branding_style'] == ['1']
+    assert iframeQString['branding_style'] == ['2']
 
 
 @pytest.mark.parametrize('posted_value, submitted_value', (
-    ('1', '1'),
-    ('__NONE__', None),
+    ('2', '2'),
+    ('__FIP-EN__', '__FIP-EN__'),
+    ('__FIP-FR__', '__FIP-FR__'),
     pytest.param('None', None, marks=pytest.mark.xfail(raises=AssertionError)),
 ))
 @pytest.mark.parametrize('endpoint, extra_args, expected_redirect', (
@@ -3240,18 +3249,32 @@ def test_should_set_branding_and_organisations(
         ),
         **extra_args
     )
-
+    expected_french_val = False if submitted_value == '__FIP-EN__' else True
     if endpoint == 'main.service_preview_email_branding':
-        mock_update_service.assert_called_once_with(
-            SERVICE_ONE_ID,
-            email_branding=submitted_value,
-        )
+        if submitted_value == '__FIP-EN__' or submitted_value == "__FIP-FR__":
+            mock_update_service.assert_called_once_with(
+                SERVICE_ONE_ID,
+                default_branding_is_french=expected_french_val,
+                email_branding=None
+            )
+        else:
+            mock_update_service.assert_called_once_with(
+                SERVICE_ONE_ID,
+                email_branding=submitted_value
+            )
         assert mock_update_organisation.called is False
     elif endpoint == 'main.organisation_preview_email_branding':
-        mock_update_organisation.assert_called_once_with(
-            ORGANISATION_ID,
-            email_branding_id=submitted_value
-        )
+        if submitted_value == '__FIP-EN__' or submitted_value == "__FIP-FR__":
+            mock_update_organisation.assert_called_once_with(
+                ORGANISATION_ID,
+                default_branding_is_french=expected_french_val,
+                email_branding_id=None,
+            )
+        else:
+            mock_update_organisation.assert_called_once_with(
+                ORGANISATION_ID,
+                email_branding_id=submitted_value,
+            )
         assert mock_update_service.called is False
     else:
         raise Exception
@@ -3271,6 +3294,50 @@ def test_organisation_type_pages_are_platform_admin_only(
         service_id=SERVICE_ONE_ID,
         _expected_status=403,
         _test_page_title=False,
+    )
+
+
+def test_should_show_page_to_set_message_limit(
+    platform_admin_client,
+):
+    response = platform_admin_client.get(url_for(
+        'main.set_message_limit',
+        service_id=SERVICE_ONE_ID
+    ))
+    assert response.status_code == 200
+    page = BeautifulSoup(response.data.decode('utf-8'), 'html.parser')
+
+    assert normalize_spaces(page.select_one('label').text) == 'Daily message limit'
+
+
+@freeze_time("2017-04-01 11:09:00.061258")
+@pytest.mark.parametrize('given_limit, expected_limit', [
+    ('1', 1),
+    ('10_000', 10_000),
+    pytest.param('foo', 'foo', marks=pytest.mark.xfail),
+])
+def test_should_set_message_limit(
+    platform_admin_client,
+    given_limit,
+    expected_limit,
+    mock_update_message_limit,
+):
+
+    response = platform_admin_client.post(
+        url_for(
+            'main.set_message_limit',
+            service_id=SERVICE_ONE_ID,
+        ),
+        data={
+            'message_limit': given_limit,
+        },
+    )
+    assert response.status_code == 302
+    assert response.location == url_for('main.service_settings', service_id=SERVICE_ONE_ID, _external=True)
+
+    mock_update_message_limit.assert_called_with(
+        SERVICE_ONE_ID,
+        expected_limit
     )
 
 
@@ -3690,7 +3757,7 @@ def test_suspend_service_prompts_user(
 
     assert response.status_code == 200
     page = BeautifulSoup(response.data.decode('utf-8'), 'html.parser')
-    assert 'This will suspend the service and revoke all api keys. Are you sure you want to suspend this service?' in \
+    assert 'This will suspend the service and revoke all API keys. Are you sure you want to suspend this service?' in \
            page.find('div', class_='banner-dangerous').text
     assert mocked_fn.called is False
 
@@ -3749,7 +3816,7 @@ def test_resume_service_prompts_user(
 
     assert response.status_code == 200
     page = BeautifulSoup(response.data.decode('utf-8'), 'html.parser')
-    assert 'This will resume the service. New api key are required for this service to use the API.' in \
+    assert 'This will resume the service. New API keys are required for this service to use the API' in \
            page.find('div', class_='banner-dangerous').text
     assert mocked_fn.called is False
 
@@ -4068,7 +4135,7 @@ def test_empty_letter_contact_block_returns_error(
         _expected_status=200,
     )
     error_message = page.find('span', class_='error-message').text.strip()
-    assert error_message == 'Can’t be empty'
+    assert error_message == 'This cannot be empty'
 
 
 def test_show_sms_prefixing_setting_page(
@@ -4202,10 +4269,12 @@ def test_show_email_branding_request_page_when_no_email_branding_is_set(
     radios = page.select('input[type=radio]')
 
     for index, option in enumerate((
-        'govuk',
-        'both',
-        'org',
-        'org_banner',
+        'fip_english',
+        'fip_french',
+        'both_english',
+        'both_french',
+        'custom_logo',
+        'custom_logo_with_background_colour',
     )):
         assert radios[index]['name'] == 'options'
         assert radios[index]['value'] == option
@@ -4230,22 +4299,26 @@ def test_show_email_branding_request_page_when_email_branding_is_set(
     radios = page.select('input[type=radio]')
 
     for index, option in enumerate((
-        'govuk',
-        'both',
-        'org',
-        'org_banner',
+        'fip_english',
+        'fip_french',
+        'both_english',
+        'both_french',
+        'custom_logo',
+        'custom_logo_with_background_colour',
     )):
         assert radios[index]['name'] == 'options'
         assert radios[index]['value'] == option
-        if option == 'org':
+        if option == 'custom_logo':
             assert 'checked' in radios[index].attrs
 
 
 @pytest.mark.parametrize('choice, requested_branding', (
-    ('govuk', 'GOV.UK only'),
-    ('both', 'GOV.UK and logo'),
-    ('org', 'Your logo'),
-    ('org_banner', 'Your logo on a colour'),
+    ('fip_english', 'Federal Identity Program (FIP) English first'),
+    ('fip_french', 'Federal Identity Program (FIP) French first'),
+    ('both_english', 'Federal Identity Program (FIP) English and your logo'),
+    ('both_french', 'Federal Identity Program (FIP) French and your logo'),
+    ('custom_logo', 'Your logo'),
+    ('custom_logo_with_background_colour', 'Your logo on a colour'),
     pytest.param('foo', 'Nope', marks=pytest.mark.xfail(raises=AssertionError)),
 ))
 @pytest.mark.parametrize('org_name, expected_organisation', (
