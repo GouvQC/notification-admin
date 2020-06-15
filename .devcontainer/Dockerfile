@@ -26,3 +26,4 @@ RUN set -ex && npm run build
 
 
 RUN make generate-version-file
+RUN make babel
