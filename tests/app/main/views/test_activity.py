@@ -33,7 +33,7 @@ from tests.conftest import (
             {'message_type': 'sms'},
             '/sms.json',
             7,
-            'Text-messages',
+            'Text messages',
         ),
         (
             active_caseworking_user,
