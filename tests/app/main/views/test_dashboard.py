@@ -772,8 +772,8 @@ def test_correct_font_size_for_big_numbers(
             'sms': {'requested': 0, 'delivered': 0, 'failed': 0}
         },
         (
-            '0 courriel sent Aucun échec',
-            '0 message texte sent Aucun échec'
+            '0 courriel envoyé Aucun échec',
+            '0 message texte envoyé Aucun échec'
         ),
         "fr"
     ),
@@ -784,8 +784,8 @@ def test_correct_font_size_for_big_numbers(
             'sms': {'requested': 1, 'delivered': 1, 'failed': 0}
         },
         (
-            '1 email sent-dashboard-single No failures',
-            '1 text message sent-dashboard-single No failures'
+            '1 email sent No failures',
+            '1 text message sent No failures'
         ),
         "en"
     ),
