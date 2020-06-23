@@ -19,8 +19,8 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY')
     DANGEROUS_SALT = os.environ.get('DANGEROUS_SALT')
     ZENDESK_API_KEY = os.environ.get('ZENDESK_API_KEY')
-    CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', 'assistance+notification@cds-snc.ca')
-    SENDING_DOMAIN = os.environ.get('SENDING_DOMAIN', 'notification.alpha.canada.ca')
+    CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', 'assistance+notification@cspq.gouv.qc.ca')
+    SENDING_DOMAIN = os.environ.get('SENDING_DOMAIN', 'cspq.gouv.qc.ca')
 
     if os.environ.get("HEROKU_APP_NAME", "") != "":
         ADMIN_BASE_URL = 'https://' + os.environ.get('HEROKU_APP_NAME', "") + '.herokuapp.com'
@@ -78,12 +78,12 @@ class Config(object):
     SHOW_STYLEGUIDE = os.getenv('SHOW_STYLEGUIDE', 'False')
     WTF_CSRF_ENABLED = True
     WTF_CSRF_TIME_LIMIT = None
-    CSV_UPLOAD_BUCKET_NAME = os.getenv('CSV_UPLOAD_BUCKET_NAME', 'notification-alpha-canada-ca-csv-upload')
+    CSV_UPLOAD_BUCKET_NAME = os.getenv('CSV_UPLOAD_BUCKET_NAME', 'notification-gouv-qc-ca-csv-upload')
     ACTIVITY_STATS_LIMIT_DAYS = 7
     TEST_MESSAGE_FILENAME = 'Report'
     NOTIFY_ENVIRONMENT = 'development'
-    LOGO_UPLOAD_BUCKET_NAME = os.getenv('ASSET_UPLOAD_BUCKET_NAME', 'notification-alpha-canada-ca-asset-upload')
-    ASSET_DOMAIN = os.getenv('ASSET_DOMAIN', 's3.amazonaws.com')
+    LOGO_UPLOAD_BUCKET_NAME = os.getenv('ASSET_UPLOAD_BUCKET_NAME', 'notification-gouv-qc-ca-asset-upload')
+    ASSET_DOMAIN = os.getenv('ASSET_DOMAIN', 's3.ca-central-1.amazonaws.com')
     MOU_BUCKET_NAME = os.getenv('MOU_BUCKET_NAME', '')
     ROUTE_SECRET_KEY_1 = os.environ.get('ROUTE_SECRET_KEY_1', '')
     ROUTE_SECRET_KEY_2 = os.environ.get('ROUTE_SECRET_KEY_2', '')
