@@ -1,4 +1,4 @@
-{% block top_of_page %}{% endblock %}
+﻿{% block top_of_page %}{% endblock %}
 <!DOCTYPE html>
 <!--[if lt IE 9]><html class="lte-ie8" lang="{{ current_lang|default('en') }}"><![endif]-->
 <!--[if gt IE 8]><!--><html
@@ -149,19 +149,19 @@
             {% if session["userlang"] == "en" %} 
               <a href="/">
                 <img
-                  alt="Government of Canada / Gouvernement du Canada"
-                  width="250"
+                  alt="Government of Quebec / Gouvernement du Québec"
+                  width="160"
                   class=""
-                  src="{{ asset_s3_url('gov-canada-en.svg') }}"
+                  src="{{ asset_s3_url('QUEBEC_couleur.svg') }}"
                 />
               </a>
             {% else %}
               <a href="/">
                 <img
-                  alt="Gouvernement du Canada / Government of Canada"
-                  width="250"
+                  alt="Gouvernement du Québec / Government of Quebec"
+                  width="160"
                   class=""
-                  src="{{ asset_s3_url('gov-canada-fr.svg') }}"
+                  src="{{ asset_s3_url('QUEBEC_couleur.sv') }}"
                 />
               </a>
             {% endif %}
