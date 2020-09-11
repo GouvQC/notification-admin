@@ -336,19 +336,19 @@ def test_upload_files_in_different_formats(
         'Could not read example.xlsx. Try using a different file format.'
     )),
     (XLDateError, (
-        'example.xlsx contains numbers or dates that Notify can’t understand. '
+        'example.xlsx contains numbers or dates that GC Notify can’t understand. '
         'Try formatting all columns as ‘text’ or export your file as CSV.'
     )),
     (XLDateNegative, (
-        'example.xlsx contains numbers or dates that Notify can’t understand. '
+        'example.xlsx contains numbers or dates that GC Notify can’t understand. '
         'Try formatting all columns as ‘text’ or export your file as CSV.'
     )),
     (XLDateAmbiguous, (
-        'example.xlsx contains numbers or dates that Notify can’t understand. '
+        'example.xlsx contains numbers or dates that GC Notify can’t understand. '
         'Try formatting all columns as ‘text’ or export your file as CSV.'
     )),
     (XLDateTooLarge, (
-        'example.xlsx contains numbers or dates that Notify can’t understand. '
+        'example.xlsx contains numbers or dates that GC Notify can’t understand. '
         'Try formatting all columns as ‘text’ or export your file as CSV.'
     )),
 ])
@@ -552,7 +552,7 @@ def test_upload_csv_invalid_extension(
     )
 
     assert resp.status_code == 200
-    assert "invalid.txt is not a spreadsheet that Notify can read" in resp.get_data(as_text=True)
+    assert "invalid.txt is not a spreadsheet that GC Notify can read" in resp.get_data(as_text=True)
 
 
 def test_upload_valid_csv_redirects_to_check_page(
@@ -663,8 +663,8 @@ def test_upload_valid_csv_shows_preview_and_table(
 
     for row_index, row in enumerate([
         (
-            '<td class="table-field-left-aligned"> <div class=""> 6502532223 </div> </td>',
-            '<td class="table-field-left-aligned"> <div class=""> A </div> </td>',
+            '<td class="table-field-left-aligned"> <div class=""> <div class="do-not-truncate-text" title="6502532223">6502532223</div> </div> </td>',  # noqa: E501
+            '<td class="table-field-left-aligned"> <div class=""> <div class="do-not-truncate-text" title="A">A</div> </div> </td>',  # noqa: E501
             (
                 '<td class="table-field-left-aligned"> '
                 '<div class="table-field-status-default"> '
@@ -676,8 +676,8 @@ def test_upload_valid_csv_shows_preview_and_table(
             )
         ),
         (
-            '<td class="table-field-left-aligned"> <div class=""> 6502532224 </div> </td>',
-            '<td class="table-field-left-aligned"> <div class=""> B </div> </td>',
+            '<td class="table-field-left-aligned"> <div class=""> <div class="do-not-truncate-text" title="6502532224">6502532224</div> </div> </td>',  # noqa: E501
+            '<td class="table-field-left-aligned"> <div class=""> <div class="do-not-truncate-text" title="B">B</div> </div> </td>',  # noqa: E501
             (
                 '<td class="table-field-left-aligned"> '
                 '<div class="table-field-status-default"> '
@@ -689,8 +689,8 @@ def test_upload_valid_csv_shows_preview_and_table(
             )
         ),
         (
-            '<td class="table-field-left-aligned"> <div class=""> 6502532225 </div> </td>',
-            '<td class="table-field-left-aligned"> <div class=""> C </div> </td>',
+            '<td class="table-field-left-aligned"> <div class=""> <div class="do-not-truncate-text" title="6502532225">6502532225</div> </div> </td>',  # noqa: E501
+            '<td class="table-field-left-aligned"> <div class=""> <div class="do-not-truncate-text" title="C">C</div> </div> </td>',  # noqa: E501
             (
                 '<td class="table-field-left-aligned"> '
                 '<div class="table-field-status-default"> '
@@ -2617,7 +2617,6 @@ def test_check_messages_shows_too_many_messages_errors(
     )
 
     assert page.find('h1').text.strip() == 'Too many recipients'
-    assert page.find('div', class_='banner-dangerous').find('a').text.strip() == 'trial mode'
 
     # remove excess whitespace from element
     details = page.find('div', class_='banner-dangerous').findAll('p')[1]
@@ -2817,7 +2816,7 @@ def test_warns_if_file_sent_already(
         page.select_one('.banner-dangerous').text
     ) == (
         'These messages have already been sent today '
-        'If you need to resend them, rename the file and upload it again. '
+        'If you need to re-send them, rename the file and upload it again. '
         'Skip to file contents'
     )
 
@@ -3099,7 +3098,7 @@ def test_check_messages_shows_over_max_row_error(
         page.find('div', class_='banner-dangerous').text.split()
     ) == (
         'Your file has too many rows '
-        'Notify can process up to 11,111 rows at once. '
+        'GC Notify can process up to 11,111 rows at once. '
         'Your file has 99,999 rows. '
         'Skip to file contents'
     )
@@ -3358,8 +3357,7 @@ def test_send_notification_redirects_to_view_page(
 
 
 TRIAL_MODE_MSG = (
-    'Can’t send to this recipient when service is in trial mode – '
-    'see https://www.notifications.service.canada.ca/trial-mode'
+    'Can’t send to this recipient when service is in trial mode'
 )
 TOO_LONG_MSG = 'Content for template has a character count greater than the limit of 612'
 SERVICE_DAILY_LIMIT_MSG = 'Exceeded send limits (1000) for today'

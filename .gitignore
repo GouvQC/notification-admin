@@ -84,6 +84,7 @@ notify.code-workspace
 schedule-message.html
 
 jinja_templates/
+scripts/searchresults.csv
 /.vs
 /env-admin
 /notification-admin.sln

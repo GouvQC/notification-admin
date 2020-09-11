@@ -13,7 +13,7 @@ def test_render_sign_in_template_for_new_user(
 ):
     client_request.logout()
     page = client_request.get('main.sign_in')
-    assert normalize_spaces(page.select_one('h1').text) == 'Log in'
+    assert normalize_spaces(page.select_one('h1').text) == 'Sign in'
     assert normalize_spaces(page.select('label')[0].text) == 'Email address'
     assert page.select_one('#email_address')['value'] == ''
     assert page.select_one('#email_address')['autocomplete'] == 'email'
@@ -24,13 +24,13 @@ def test_render_sign_in_template_for_new_user(
     assert page.select('main a')[0]['href'] == url_for('main.register')
     assert page.select('main a')[1].text == 'Forgot your password?'
     assert page.select('main a')[1]['href'] == url_for('main.forgot_password')
-    assert 'Log in again' not in normalize_spaces(page.text)
+    assert 'Sign in again' not in normalize_spaces(page.text)
 
 
 def test_sign_in_explains_session_timeout(client):
     response = client.get(url_for('main.sign_in', next='/foo'))
     assert response.status_code == 200
-    assert 'We logged you out because you haven’t used Notify for a while.' in response.get_data(as_text=True)
+    assert 'We signed you out because you haven’t used GC Notify for a while.' in response.get_data(as_text=True)
 
 
 def test_sign_in_explains_other_browser(logged_in_client, api_user_active, mocker):
@@ -42,7 +42,7 @@ def test_sign_in_explains_other_browser(logged_in_client, api_user_active, mocke
 
     response = logged_in_client.get(url_for('main.sign_in', next='/foo'))
 
-    assert_str = 'We logged you out because you logged in to Notify on another device'
+    assert_str = 'We signed you out because you signed in to GC Notify on another device'
 
     assert response.status_code == 200
     assert assert_str in response.get_data(as_text=True)
@@ -114,7 +114,7 @@ def test_process_sms_auth_sign_in_return_2fa_template(
             'email_address': email_address,
             'password': password})
     assert response.status_code == 302
-    assert response.location == url_for('.two_factor', _external=True)
+    assert response.location == url_for('.two_factor_sms_sent', _external=True)
     mock_get_security_keys.assert_called_with(api_user_active['id'])
     mock_verify_password.assert_called_with(
         api_user_active['id'],
@@ -127,6 +127,7 @@ def test_process_email_auth_sign_in_return_2fa_template(
     api_user_active_email_auth,
     mock_send_verify_code,
     mock_verify_password,
+    mock_get_security_keys,
     mocker
 ):
     mocker.patch('app.user_api_client.get_user', return_value=api_user_active_email_auth)
@@ -180,7 +181,7 @@ def test_should_return_redirect_when_user_is_pending(
             'password': 'val1dPassw0rd!'}, follow_redirects=True)
 
     page = BeautifulSoup(response.data.decode('utf-8'), 'html.parser')
-    assert page.h1.string == 'Log in'
+    assert page.h1.string == 'Sign in'
     assert response.status_code == 200
 
 
@@ -232,6 +233,7 @@ def test_sign_in_security_center_notification_for_non_NA_signins(
     api_user_active_email_auth,
     mock_send_verify_code,
     mock_verify_password,
+    mock_get_security_keys,
     mocker
 ):
     mocker.patch('app.user_api_client.get_user', return_value=api_user_active_email_auth)

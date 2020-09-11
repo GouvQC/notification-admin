@@ -120,14 +120,6 @@ def pricing():
     )
 
 
-@main.route('/pricing/how-to-pay')
-def how_to_pay():
-    return render_template(
-        'views/pricing/how-to-pay.html',
-        support_link=url_for('main.feedback', ticket_type=QUESTION_TICKET_TYPE),
-    )
-
-
 @main.route('/delivery-and-failure')
 def delivery_and_failure():
     return redirect(url_for('.message_status'), 301)
@@ -279,7 +271,9 @@ def integration_testing():
     return render_template('views/integration-testing.html'), 410
 
 
+# Only linked from authenticated pages. See #1025
 @main.route('/callbacks')
+@user_is_logged_in
 def callbacks():
     return render_template('views/callbacks.html')
 
@@ -360,19 +354,6 @@ def using_notify():
 def message_status():
     return render_template(
         'views/message-status.html',
-        navigation_links=features_nav()
-    )
-
-
-@main.route('/trial-mode')
-def trial_mode():
-    return redirect(url_for('.trial_mode_new'), 301)
-
-
-@main.route('/features/trial-mode')
-def trial_mode_new():
-    return render_template(
-        'views/trial-mode.html',
         navigation_links=features_nav()
     )
 

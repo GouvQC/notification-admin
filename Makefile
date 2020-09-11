@@ -21,11 +21,22 @@ generate-version-file: ## Generates the app version file
 test:
 	./scripts/run_tests.sh
 
+.PHONY: babel-test
+babel-test: babel
+	pybabel extract -F babel.cfg -k _l -o /tmp/messages.po . && po2csv /tmp/messages.po /tmp/messages.csv
+	rm /tmp/messages.po
+	python scripts/babel_test.py /tmp/messages.csv
+	rm /tmp/messages.csv
+
 .PHONY: babel
 babel: 
 	csv2po app/translations/csv/en.csv app/translations/en/LC_MESSAGES/messages.po
 	csv2po app/translations/csv/fr.csv app/translations/fr/LC_MESSAGES/messages.po
 	pybabel compile -d app/translations
+
+.PHONY: search-csv
+search-csv:
+	python scripts/search_csv.py
 
 .PHONY: freeze-requirements
 freeze-requirements:
