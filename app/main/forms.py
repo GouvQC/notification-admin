@@ -37,7 +37,7 @@ from wtforms.widgets import CheckboxInput, ListWidget
 
 from app import format_thousands
 from app.main.validators import (
-    Blacklist,
+    Blocklist,
     CsvFileValidator,
     DoesNotStartWithDoubleZero,
     LettersNumbersAndFullStopsOnly,
@@ -135,7 +135,7 @@ class UKMobileNumber(TelField):
         try:
             validate_phone_number(self.data)
         except InvalidPhoneError as e:
-            raise ValidationError(str(e))
+            raise ValidationError(_l(str(e)))
 
 
 class InternationalPhoneNumber(TelField):
@@ -144,7 +144,7 @@ class InternationalPhoneNumber(TelField):
             if self.data:
                 validate_phone_number(self.data, international=True)
         except InvalidPhoneError as e:
-            raise ValidationError(str(e))
+            raise ValidationError(_l(str(e)))
 
 
 def uk_mobile_number(label='Mobile number'):
@@ -163,10 +163,10 @@ def password(label=_l('Password')):
     return PasswordField(label,
                          validators=[DataRequired(message=_l('This cannot be empty')),
                                      Length(8, 255, message=_l('Must be at least 8 characters')),
-                                     Blacklist(message=_l('Choose a password that’s harder to guess'))])
+                                     Blocklist(message=_l('Choose a password that’s harder to guess'))])
 
 
-class SMSCode(StringField):
+class TwoFactorCode(StringField):
     validators = [
         DataRequired(message=_l('This cannot be empty')),
         Regexp(regex=r'^\d+$', message=_l('Numbers only')),
@@ -450,10 +450,10 @@ class PermissionsForm(PermissionsAbstract):
     folder_permissions = NestedCheckboxesField(_l('Folders this team member can see'))
 
     login_authentication = RadioField(
-        _l('Log in using'),
+        _l('Sign in using'),
         choices=[
             ('sms_auth', _l('Text message code')),
-            ('email_auth', _l('Email link')),
+            ('email_auth', _l('Email code')),
         ],
         validators=[DataRequired()]
     )
@@ -511,17 +511,16 @@ class TwoFactorForm(StripWhitespaceForm):
         self.validate_code_func = validate_code_func
         super(TwoFactorForm, self).__init__(*args, **kwargs)
 
-    sms_code = SMSCode(_l('Please enter security code'))
+    two_factor_code = TwoFactorCode(_l('Please enter the security code.'))
 
     def validate(self):
-
-        if not self.sms_code.validate(self):
+        if not self.two_factor_code.validate(self):
             return False
 
-        is_valid, reason = self.validate_code_func(self.sms_code.data)
+        is_valid, reason = self.validate_code_func(self.two_factor_code.data)
 
         if not is_valid:
-            self.sms_code.errors.append(reason)
+            self.two_factor_code.errors.append(_l(reason))
             return False
 
         return True
@@ -802,7 +801,7 @@ class ChooseTimeForm(StripWhitespaceForm):
         self.scheduled_for.categories = get_next_days_until(get_furthest_possible_scheduled_time())
 
     scheduled_for = RadioField(
-        _l('When should <i>Notify</i> send these messages?'),
+        _l('When should we send these messages?'),
         default='',
         validators=[
             DataRequired()
@@ -875,6 +874,17 @@ class ContactNotifyTeam(StripWhitespaceForm):
     email_address = email_address(label=_l('Your email'), gov_user=False)
     phone = StringField(_l('Your phone'))
     feedback = TextAreaField(_l('Message'), validators=[DataRequired(message=not_empty)])
+
+
+class SelectLogoForm(StripWhitespaceForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.branding_style.choices = kwargs['choices']
+        self.branding_style.label.text = kwargs['label']
+        self.branding_style.validators = [DataRequired()]
+
+    branding_style = SelectField()
+    file = FileField_wtf(_l('Upload logo'), validators=[FileAllowed(['png'], _l('Your logo must be an image in PNG format'))])
 
 
 class Feedback(StripWhitespaceForm):
@@ -970,7 +980,7 @@ class ServiceContactDetailsForm(StripWhitespaceForm):
                     validate_phone_number(num.data)
                     return True
                 except InvalidPhoneError:
-                    raise ValidationError('Must be a valid phone number')
+                    raise ValidationError(_l('Must be a valid phone number'))
             self.phone_number.validators = [DataRequired(), Length(min=5, max=20), valid_phone_number]
 
         return super().validate()
@@ -1159,26 +1169,26 @@ class PDFUploadForm(StripWhitespaceForm):
     )
 
 
-class EmailFieldInWhitelist(EmailField, StripWhitespaceStringField):
+class EmailFieldInSafelist(EmailField, StripWhitespaceStringField):
     pass
 
 
-class InternationalPhoneNumberInWhitelist(InternationalPhoneNumber, StripWhitespaceStringField):
+class InternationalPhoneNumberInSafelist(InternationalPhoneNumber, StripWhitespaceStringField):
     pass
 
 
-class Whitelist(StripWhitespaceForm):
+class Safelist(StripWhitespaceForm):
 
     def populate(self, email_addresses, phone_numbers):
-        for form_field, existing_whitelist in (
+        for form_field, existing_safelist in (
             (self.email_addresses, email_addresses),
             (self.phone_numbers, phone_numbers)
         ):
-            for index, value in enumerate(existing_whitelist):
+            for index, value in enumerate(existing_safelist):
                 form_field[index].data = value
 
     email_addresses = FieldList(
-        EmailFieldInWhitelist(
+        EmailFieldInSafelist(
             '',
             validators=[
                 Optional(),
@@ -1192,7 +1202,7 @@ class Whitelist(StripWhitespaceForm):
     )
 
     phone_numbers = FieldList(
-        InternationalPhoneNumberInWhitelist(
+        InternationalPhoneNumberInSafelist(
             '',
             validators=[
                 Optional()

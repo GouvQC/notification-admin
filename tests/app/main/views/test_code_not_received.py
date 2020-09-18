@@ -40,7 +40,7 @@ def test_should_render_correct_resend_template_for_active_user(
     assert response.status_code == 200
 
     page = BeautifulSoup(response.data.decode('utf-8'), 'html.parser')
-    assert page.h1.string == 'Resend security code'
+    assert page.h1.string == 'Re-send security code'
     # there shouldn't be a form for updating mobile number
     assert page.find('form') is None
 
@@ -64,7 +64,7 @@ def test_should_render_correct_resend_template_for_pending_user(
     page = BeautifulSoup(response.data.decode('utf-8'), 'html.parser')
     assert page.h1.string == 'Check your mobile number'
 
-    expected = 'Check your mobile phone number is correct and then resend the security code.'
+    expected = 'Check your mobile phone number is correct and then re-send the security code.'
     message = page.find_all('p', {'class': 'phone-confirm'})[0].text
     assert message == expected
     assert page.find('form').input['value'] == api_user_pending['mobile_number']
@@ -116,7 +116,7 @@ def test_check_and_redirect_to_two_factor_if_user_active(
             'email': api_user_active['email_address']}
     response = client.get(url_for('main.check_and_resend_verification_code'))
     assert response.status_code == 302
-    assert response.location == url_for('main.two_factor', _external=True)
+    assert response.location == url_for('main.two_factor_sms_sent', _external=True)
 
 
 def test_check_and_redirect_to_verify_if_user_pending(

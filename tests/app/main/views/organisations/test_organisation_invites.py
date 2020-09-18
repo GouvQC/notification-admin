@@ -218,7 +218,7 @@ def test_registration_from_org_invite_404s_if_user_not_in_session(
         'name': 'Bad Mobile',
         'mobile_number': 'not good',
         'password': 'validPassword!'
-    }, 'Not a valid international number'],
+    }, 'Not a valid phone number'],
     [{
         'name': 'Bad Password',
         'mobile_number': '+4966921809',
@@ -359,7 +359,7 @@ def test_verified_org_user_redirects_to_dashboard(
         session['organisation_id'] = invited_org_user['organisation']
         session['blocked'] = invited_org_user['blocked']
 
-    response = client.post(url_for('main.verify'), data={'sms_code': '12345'})
+    response = client.post(url_for('main.verify'), data={'two_factor_code': '12345'})
 
     assert response.status_code == 302
     assert response.location == url_for(

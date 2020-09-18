@@ -185,7 +185,7 @@ def send_messages(service_id, template_id):
             ))
         except (XLDateError):
             flash(_(
-                '{} contains numbers or dates that Notify can’t understand. '
+                '{} contains numbers or dates that GC Notify can’t understand. '
                 'Try formatting all columns as ‘text’ or export your file as CSV.'
             ).format(
                 form.file.data.filename
@@ -272,8 +272,8 @@ def s3_send(service_id, template_id):
                 form.s3_files.data
             ))
         except (XLDateError):
-            flash((
-                '{} contains numbers or dates that Notify can’t understand. '
+            flash(_(
+                '{} contains numbers or dates that GC Notify can’t understand. '
                 'Try formatting all columns as ‘text’ or export your file as CSV.'
             ).format(
                 form.s3_files.data
@@ -665,7 +665,7 @@ def _check_messages(service_id, template_id, upload_id, preview_row, letters_as_
         placeholders=template.placeholders,
         max_initial_rows_shown=50,
         max_errors_shown=50,
-        whitelist=itertools.chain.from_iterable(
+        safelist=itertools.chain.from_iterable(
             [user.name, user.mobile_number, user.email_address] for user in Users(service_id)
         ) if current_service.trial_mode else None,
         remaining_messages=remaining_messages,

@@ -31,7 +31,7 @@ def test_non_logged_in_user_can_see_homepage(
     )
 
     assert page.select_one('meta[name=description]')['content'].strip() == (
-        'Notify lets you send emails and text messages to your users'
+        'GC Notify lets you send emails and text messages to your users'
     )
 
 
@@ -83,7 +83,7 @@ def test_robots(client):
     'privacy', 'pricing', 'terms', 'roadmap',
     'features', 'callbacks', 'documentation', 'security',
     'message_status', 'features_email', 'features_sms',
-    'features_letters', 'how_to_pay',
+    'features_letters',
 ])
 def test_static_pages(
     client_request,
@@ -117,15 +117,6 @@ def test_old_static_pages_redirect(
     )
 
 
-def test_message_status_page_contains_message_status_ids(client_request):
-    # The 'email-statuses' and 'sms-statuses' id are linked to when we display a message status,
-    # so this test ensures we don't accidentally remove them
-    page = client_request.get('main.message_status')
-
-    assert page.find(id='email-statuses')
-    assert page.find(id='sms-statuses')
-
-
 def test_old_using_notify_page(client_request):
     client_request.get('main.using_notify', _expected_status=410)
 
@@ -150,7 +141,9 @@ def test_old_integration_testing_page(
 def test_terms_page_has_correct_content(client_request):
     terms_page = client_request.get('main.terms')
     assert normalize_spaces(terms_page.select('main p')[0].text) == (
-        'These terms apply to use of Notify. Your account manager must accept them.'
+        'The following terms apply to use of GC Notify, a product operated by the '
+        'Canadian Digital Service (CDS). GC Notify is available for use by Canadian federal '
+        'and provincial departments and agencies to send service transaction updates.'
     )
 
 

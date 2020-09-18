@@ -15,14 +15,14 @@ from wtforms import ValidationError
 from wtforms.validators import Email
 
 from app import formatted_list
-from app.main._blacklisted_passwords import blacklisted_passwords
+from app.main._blocked_passwords import blocked_passwords
 from app.utils import Spreadsheet, is_gov_user
 
 
-class Blacklist:
+class Blocklist:
     def __init__(self, message=None):
         if not message:
-            message = _('Password is blacklisted.')
+            message = _('This password is not allowed. Try a different password.')
         self.message = message
 
     def __call__(self, form, field):
@@ -44,7 +44,7 @@ class Blacklist:
             if hibp_bad_password_found:
                 raise ValidationError(self.message)
 
-        if field.data in blacklisted_passwords:
+        if field.data in blocked_passwords:
             raise ValidationError(self.message)
 
 
@@ -55,7 +55,7 @@ class CsvFileValidator:
 
     def __call__(self, form, field):
         if not Spreadsheet.can_handle(field.data.filename):
-            raise ValidationError("{} {}".format(field.data.filename, _("is not a spreadsheet that Notify can read")))
+            raise ValidationError("{} {}".format(field.data.filename, _("is not a spreadsheet that GC Notify can read")))
 
 
 class ValidGovEmail:
@@ -90,7 +90,7 @@ class ValidEmail(Email):
         try:
             validate_email_address(field.data)
         except InvalidEmailError:
-            raise ValidationError(self.message)
+            raise ValidationError(_l(self.message))
 
         return super().__call__(form, field)
 

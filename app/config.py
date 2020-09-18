@@ -19,8 +19,8 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY')
     DANGEROUS_SALT = os.environ.get('DANGEROUS_SALT')
     ZENDESK_API_KEY = os.environ.get('ZENDESK_API_KEY')
-    CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', 'assistance+notification@cspq.gouv.qc.ca')
-    SENDING_DOMAIN = os.environ.get('SENDING_DOMAIN', 'cspq.gouv.qc.ca')
+    CONTACT_EMAIL = os.environ.get('CONTACT_EMAIL', 'assistance+notification@notification.gouv.qc.ca')
+    SENDING_DOMAIN = os.environ.get('SENDING_DOMAIN', 'itq.gouv.qc.ca')
 
     if os.environ.get("HEROKU_APP_NAME", "") != "":
         ADMIN_BASE_URL = 'https://' + os.environ.get('HEROKU_APP_NAME', "") + '.herokuapp.com'
@@ -49,7 +49,7 @@ class Config(object):
     ANTIVIRUS_API_KEY = os.environ.get('ANTIVIRUS_API_KEY')
 
     ASSETS_DEBUG = False
-    AWS_REGION = os.environ.get("AWS_REGION", "us-east-1")
+    AWS_REGION = os.environ.get("AWS_REGION", "ca-central-1")
     DEFAULT_SERVICE_LIMIT = 50
     DEFAULT_FREE_SMS_FRAGMENT_LIMITS = {
         'central': 250000,

@@ -1,4 +1,4 @@
-{% block top_of_page %}{% endblock %}
+﻿{% block top_of_page %}{% endblock %}
 <!DOCTYPE html>
 <!--[if lt IE 9]><html class="lte-ie8" lang="{{ current_lang|default('en') }}"><![endif]-->
 <!--[if gt IE 8]><!--><html
@@ -110,6 +110,7 @@
         "choose_arbitrary things": "{{ _('Choose arbitrary things') }}",
         send_now: "{{ _('Send now') }}",
         send_later: "{{ _('Schedule') }}"
+
       }; 
 
     </script>
@@ -130,7 +131,7 @@
         <a
           href="#content"
           class="skiplink"
-          >{{ skip_link_message|default('Skip to main content') }}</a
+          >{{ _('Skip to main content') }}</a
         >
       </div>
     </div>
@@ -170,9 +171,9 @@
                 <div
                   class="leading-none lg:ml-4 mr-5 lg:pl-5 font-semibold inline-block top-0 text-brand pb-0"
                 >
-                  <i>Notify</i>
+                {{ _("Notify") }}
                 </div>
-                <div class="py-1 px-2 rounded-lg text-small">
+                <div class="bg-blue-lighter py-1 px-2 rounded-lg text-small">
                   {{ _("Alpha") }}
                 </div>
              
@@ -181,7 +182,7 @@
           </a>
           </div>
           <!-- start sub nav -->
-          <nav aria-label="Language & Login" class="flex pt-4 mb-10 lg:mb-0">
+          <nav aria-label="{{ _('language and login') }}" class="flex pt-4 mb-10 lg:mb-0">
             <a
               class="mr-10 line-under leading-none inline-block text-blue text-small underline hover:no-underline"
               href="{{ url_for('main.set_lang')}}?from={{request.path}}"
@@ -202,14 +203,14 @@
               href="{{ url_for('main.sign_out')}}"
               class="line-under leading-none inline-block text-blue text-small pl-5 underline hover:no-underline"
               >
-              {{ _('Log out') }}
+              {{ _('Sign out') }}
             </a>
 
             {% else %}
             <a
             href="{{ url_for('main.sign_in' )}}"
             class="line-under leading-none inline-block text-blue text-small pl-5 underline hover:no-underline"
-            >{{ _('Log in') }}
+            >{{ _('Sign in') }}
             </a>
 
 
@@ -220,7 +221,7 @@
       </div>
 
       <!-- start main nav -->
-      <nav class="bg-gray py-5" aria-label="main navigation">
+      <nav class="bg-gray py-5" aria-label="{{ _('main navigation') }}">
         <div class="container px-10">
           <div class="lg:hidden">
             <a
@@ -310,7 +311,7 @@
     <div id="global-app-error" class="app-error hidden"></div>
 
     <!-- start section 9 -->
-    <footer aria-label="footer menu">
+    <footer aria-label="{{ _('footer menu') }}">
       <div class="bg-blue">
         <div class="container px-10 py-24">
           <nav class="flex aria-label="footer links">

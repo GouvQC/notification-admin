@@ -73,7 +73,9 @@ class User(JSONModel, UserMixin):
         if not user:
             return None
         if user.locked:
-            return None
+            if not user.blocked:
+                user.update(blocked=True)
+            return user
         if not user_api_client.verify_password(user.id, password, login_data):
             return None
         return user
@@ -138,7 +140,7 @@ class User(JSONModel, UserMixin):
         if not self.is_active:
             return False
 
-        if self.email_auth:
+        if self.email_auth and len(self.security_keys) == 0:
             user_api_client.send_verify_code(self.id, 'email', None, request.args.get('next'))
         if self.sms_auth and len(self.security_keys) == 0:
             user_api_client.send_verify_code(self.id, 'sms', self.mobile_number)

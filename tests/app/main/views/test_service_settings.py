@@ -209,7 +209,7 @@ def test_organisation_name_links_to_org_dashboard(
     (['email', 'sms', 'email_auth'], [
 
         'Service name service one Change',
-        'Login method Email link or text message code Change',
+        'Login method Email code or text message code Change',
 
         'Label Value Action',
         'Send emails On Change',
@@ -3450,7 +3450,7 @@ def test_unknown_channel_404s(
     ),
     (
         'email',
-        'It’s free to send emails through Notify.',
+        'It’s free to send emails through GC Notify.',
         'Send emails',
         [],
         'False', 'True',
@@ -3458,7 +3458,7 @@ def test_unknown_channel_404s(
     ),
     (
         'email',
-        'It’s free to send emails through Notify.',
+        'It’s free to send emails through GC Notify.',
         'Send emails',
         ['email', 'sms', 'letter'],
         'True', 'True',
@@ -4023,7 +4023,7 @@ def test_contact_link_is_not_displayed_without_the_upload_document_permission(
         'main.service_set_auth_type',
         ['email_auth'],
         (
-            'Email link or text message code'
+            'Email code or text message code'
         )
     ),
 ])
@@ -4313,10 +4313,10 @@ def test_show_email_branding_request_page_when_email_branding_is_set(
 
 
 @pytest.mark.parametrize('choice, requested_branding', (
-    ('fip_english', 'Federal Identity Program (FIP) English first'),
-    ('fip_french', 'Federal Identity Program (FIP) French first'),
-    ('both_english', 'Federal Identity Program (FIP) English and your logo'),
-    ('both_french', 'Federal Identity Program (FIP) French and your logo'),
+    ('fip_english', 'Government of Canada signature English first'),
+    ('fip_french', 'Government of Canada signature French first'),
+    ('both_english', 'Government of Canada signature English and your logo'),
+    ('both_french', 'Government of Canada signature French and your logo'),
     ('custom_logo', 'Your logo'),
     ('custom_logo_with_background_colour', 'Your logo on a colour'),
     pytest.param('foo', 'Nope', marks=pytest.mark.xfail(raises=AssertionError)),
