@@ -2,3 +2,6 @@ gouv.qc.ca
 notification.gouv.qc.ca
 itq.gouv.qc.ca
 retraitequebec.gouv.qc.ca
+canada.ca
+gc.ca
+cds-snc.ca
