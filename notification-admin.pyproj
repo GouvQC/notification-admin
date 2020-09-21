@@ -293,10 +293,15 @@
     <Content Include="app\assets\images\homepage\mac-phone.svg" />
     <Content Include="app\assets\images\homepage\pricing-en.svg" />
     <Content Include="app\assets\images\homepage\pricing-fr.svg" />
+<<<<<<< HEAD
     <Content Include="app\assets\images\homepage\QUEBEC_couleur.svg" />
     <Content Include="app\assets\images\homepage\recipients-en.svg" />
     <Content Include="app\assets\images\homepage\recipients-fr.svg" />
     <Content Include="app\assets\images\homepage\signature-PIV.svg" />
+=======
+    <Content Include="app\assets\images\homepage\recipients-en.svg" />
+    <Content Include="app\assets\images\homepage\recipients-fr.svg" />
+>>>>>>> 72a162cb96150c7ba74cbe6b10b4f06240cf2cad
     <Content Include="app\assets\images\homepage\text-messages-en.svg" />
     <Content Include="app\assets\images\homepage\text-messages-fr.svg" />
     <Content Include="app\assets\images\icon-important-2x.png" />
@@ -774,8 +779,11 @@
     <Content Include="app\templates\views\verify-mobile.html" />
     <Content Include="app\templates\withnav_template.html" />
     <Content Include="app\templates\withoutnav_template.html" />
+<<<<<<< HEAD
     <Content Include="app\translations\csv\en.csv" />
     <Content Include="app\translations\csv\fr.csv" />
+=======
+>>>>>>> 72a162cb96150c7ba74cbe6b10b4f06240cf2cad
     <Content Include="app\translations\en\LC_MESSAGES\messages.mo" />
     <Content Include="app\translations\en\LC_MESSAGES\messages.po" />
     <Content Include="app\translations\fr\LC_MESSAGES\messages.mo" />
@@ -939,7 +947,10 @@
     <Folder Include="app\templates\views\uploads\" />
     <Folder Include="app\templates\views\user-profile\" />
     <Folder Include="app\translations\" />
+<<<<<<< HEAD
     <Folder Include="app\translations\csv\" />
+=======
+>>>>>>> 72a162cb96150c7ba74cbe6b10b4f06240cf2cad
     <Folder Include="app\translations\en\" />
     <Folder Include="app\translations\en\LC_MESSAGES\" />
     <Folder Include="app\translations\fr\" />
