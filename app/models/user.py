@@ -558,6 +558,7 @@ class InvitedOrgUser(JSONModel):
     def __init__(self, _dict):
         super().__init__(_dict)
         self._invited_by = _dict['invited_by']
+        self.blocked = False
 
     def __eq__(self, other):
         return ((self.id,
