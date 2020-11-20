@@ -364,7 +364,7 @@ def usage_for_all_services_by_organization():
             }
         else:
             flash('No results for dates')
-    return render_template('views/platform-admin/usage-for-all-services-by-organization.html', form=form)
+    return render_template('views/platform-admin/usage_for_all_services_by_organization.html', form=form)
 
 
 @main.route("/platform-admin/complaints")
