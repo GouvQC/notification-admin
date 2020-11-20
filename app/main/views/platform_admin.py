@@ -335,6 +335,7 @@ def usage_for_all_services():
             flash('No results for dates')
     return render_template('views/platform-admin/usage_for_all_services.html', form=form)
 
+
 @main.route("/platform-admin/reports/usage-for-all-services-by-organization", methods=['GET', 'POST'])
 @user_is_platform_admin
 def usage_for_all_services_by_organization():

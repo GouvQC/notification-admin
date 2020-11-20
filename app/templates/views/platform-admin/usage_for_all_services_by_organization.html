@@ -2,19 +2,19 @@
 {% from "components/form.html" import form_wrapper %}
 
 {% block per_page_title %}
-  {{ _('Usage for all services by organization') }}
+{{ _('Usage for all services by organization') }}
 {% endblock %}
 
 {% block platform_admin_content %}
 
-  <h1 class="heading-large">
-      {{ _('Usage for all services by organization') }}
-  </h1>
+<h1 class="heading-large">
+    {{ _('Usage for all services by organization') }}
+</h1>
 
   {% call form_wrapper() %}
-    {{ textbox(form.start_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
-    {{ textbox(form.end_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
-    {{ page_footer(_('Download report')) }}
+{{ textbox(form.start_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
+{{ textbox(form.end_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
+{{ page_footer(_('Download report')) }}
   {% endcall %}
 
 {% endblock %}
