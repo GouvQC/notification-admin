@@ -119,7 +119,7 @@ class NotificationApiClient(NotifyAdminAPIClient):
             }
         )
 
-    def get_notification_status_by_service_by_organization(self, start_date, end_date):
+    def get_notification_status_by_service_by_organisation(self, start_date, end_date):
         return self.get(
             url='service/monthly-data-by-service',
             params={

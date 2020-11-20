@@ -311,35 +311,38 @@ def usage_for_all_services():
     form = RequiredDateFilterForm()
 
     if form.validate_on_submit():
+        organisation_name = form.organisation_name.data
+        start_date = form.start_date.data
         start_date = form.start_date.data
         end_date = form.end_date.data
         headers = ["organisation_id", "organisation_name", "service_id", "service_name",
                    "sms_cost", "sms_fragments", "letter_cost", "letter_breakdown"]
 
-        result = billing_api_client.get_usage_for_all_services(start_date, end_date)
-        rows = [
-            [
-                r['organisation_id'], r["organisation_name"], r["service_id"], r["service_name"],
-                r["sms_cost"], r['sms_fragments'], r["letter_cost"], r["letter_breakdown"].strip()
-            ]
-            for r in result
-        ]
-        if rows:
-            return Spreadsheet.from_rows([headers] + rows).as_csv_data, 200, {
-                'Content-Type': 'text/csv; charset=utf-8',
-                'Content-Disposition': 'attachment; filename="Usage for all services from {} to {}.csv"'.format(
-                    start_date, end_date
-                )
-            }
-        else:
-            flash('No results for dates')
+        # result =  billing_api_client.get_usage_for_all_services_by_organisation(start_date, end_date)
+        # rows = [
+        #     [
+        #         r['organisation_id'], r["organisation_name"], r["service_id"], r["service_name"],
+        #         r["sms_cost"], r['sms_fragments'], r["letter_cost"], r["letter_breakdown"].strip()
+        #     ]
+        #     for r in result
+        # ]
+        # if rows:
+        #     return Spreadsheet.from_rows([headers] + rows).as_csv_data, 200, {
+        #         'Content-Type': 'text/csv; charset=utf-8',
+        #         'Content-Disposition': 'attachment; filename="Usage for all services from {} to {}.csv"'.format(
+        #             start_date, end_date
+        #         )
+        #     }
+        # else:
+        #     flash('No results for dates')
+        flash('On a réussi à peser sur le bouton')
     return render_template('views/platform-admin/usage_for_all_services.html', form=form)
 
 
-@main.route("/platform-admin/reports/usage-for-all-services-by-organization", methods=['GET', 'POST'])
+@main.route("/platform-admin/reports/usage-for-all-services-by-organisation", methods=['GET', 'POST'])
 @user_is_platform_admin
-def usage_for_all_services_by_organization():
-    form = RequiredDateFilterForm()
+def usage_for_all_services_by_organisation():
+    form = OrganisationName()
 
     if form.validate_on_submit():
         start_date = form.start_date.data
@@ -364,7 +367,7 @@ def usage_for_all_services_by_organization():
             }
         else:
             flash('No results for dates')
-    return render_template('views/platform-admin/usage_for_all_services_by_organization.html', form=form)
+    return render_template('views/platform-admin/usage_for_all_services_by_organisation.html', form=form)
 
 
 @main.route("/platform-admin/complaints")

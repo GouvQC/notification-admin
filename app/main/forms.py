@@ -857,6 +857,20 @@ class SupportType(StripWhitespaceForm):
         validators=[DataRequired()]
     )
 
+class OrganisationName(StripWhitespaceForm):
+    organisation_name = SelectField(
+        'Organisation Name',
+        choices=[
+            (_l('0'), _l('RQ')),
+            (_l('1'), _l('ITQ')),
+            (_l('2'), _l('Feds')),
+            (_l('3'), _l('Gouv')),
+        ],
+        validators=[DataRequired()]
+    )
+    start_date = DateField("Start Date")
+    end_date = DateField("End Date")
+
 
 class ContactNotifyTeam(StripWhitespaceForm):
     not_empty = _l('This cannot be empty')
