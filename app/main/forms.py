@@ -857,6 +857,7 @@ class SupportType(StripWhitespaceForm):
         validators=[DataRequired()]
     )
 
+
 class OrganisationName(StripWhitespaceForm):
     organisation_name = SelectField(
         'Organisation Name',

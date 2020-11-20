@@ -345,7 +345,6 @@ def usage_for_all_services_by_organiation():
     if form.validate_on_submit():
         organisation_name = form.organisation_name.data
         start_date = form.start_date.data
-        start_date = form.start_date.data
         end_date = form.end_date.data
         headers = ["organisation_id", "organisation_name", "service_id", "service_name",
                    "sms_cost", "sms_fragments", "letter_cost", "letter_breakdown"]
@@ -367,7 +366,7 @@ def usage_for_all_services_by_organiation():
         #     }
         # else:
         #     flash('No results for dates')
-        flash('On a réussi à peser sur le bouton')
+        flash('On a réussi à peser sur le bouton ' + str(organisation_name) + ' ' + str(start_date) + ' ' + str(end_date))
     return render_template('views/platform-admin/usage_for_all_services_by_organisation.html', form=form)
 
 
