@@ -366,7 +366,7 @@ def usage_for_all_services_by_organiation():
         #     }
         # else:
         #     flash('No results for dates')
-        flash('On a réussi à peser sur le bouton ' + str(organisation_name) + ' ' + str(start_date) + ' ' + str(end_date))
+        flash('On a réussi à peser sur le bouton  ' + str(organisation_name) + ' ' + str(start_date) + ' ' + str(end_date))
     return render_template('views/platform-admin/usage_for_all_services_by_organisation.html', form=form)
 
 
