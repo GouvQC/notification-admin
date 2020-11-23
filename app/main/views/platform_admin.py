@@ -339,7 +339,7 @@ def usage_for_all_services():
 
 @main.route("/platform-admin/reports/usage-for-all-services-by-organisation", methods=['GET', 'POST'])
 @user_is_platform_admin
-def usage_for_all_services_by_organiation():
+def usage_for_all_services_by_organisation():
     form = OrganisationName()
 
     if form.validate_on_submit():
