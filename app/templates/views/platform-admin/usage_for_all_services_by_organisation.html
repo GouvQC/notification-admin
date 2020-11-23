@@ -2,37 +2,36 @@
 {% from "components/form.html" import form_wrapper %}
 
 {% block per_page_title %}
-{{ _('Usage for all services by organisation') }}
+  {{ _('Usage for all services by organisation') }}
 {% endblock %}
 
 {% block platform_admin_content %}
 
-<h1 class="heading-large">
+  <h1 class="heading-large">
     {{ _('Usage for all services by organisation') }}
-</h1>
+  </h1>
 
   {% call form_wrapper() %}
+    <div class="form-group">
+      <label class="form-label" for="organisation_name">
+        {{ _('Organisation name') }}
+      </label>
 
-  <div class="form-group">
-    <label class="form-label" for="organisation_name">
-      {{ _('Organisation name') }}
-    </label>
+      <select class="form-control form-control-1-1 " name="organisation_name">
+        {% for option in form.organisation_name %}
 
-    <select class="form-control form-control-1-1 " name="organisation_name">
-      {% for option in form.organisation_name %}
-
-      {% set checked = "" %}
-      {% if option.checked %}
-        {% set checked = "selected" %}
-      {% endif %}
-      
-      <option {{checked}} value="{{ option.data }}">{{ option.label.text }}</option>
-      {% endfor %}
-    </select>
-  </div>
-{{ textbox(form.start_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
-{{ textbox(form.end_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
-{{ page_footer(_('Download report')) }}
+        {% set checked = "" %}
+        {% if option.checked %}
+          {% set checked = "selected" %}
+        {% endif %}
+        
+        <option {{checked}} value="{{ option.data }}">{{ option.label.text }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    {{ textbox(form.start_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
+    {{ textbox(form.end_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
+    {{ page_footer(_('Download report')) }}
   {% endcall %}
 
 {% endblock %}
