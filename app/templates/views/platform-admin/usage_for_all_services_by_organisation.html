@@ -13,12 +13,12 @@
 
   {% call form_wrapper() %}
     <div class="form-group">
-      <label class="form-label" for="organisation_name">
+      <label class="form-label" for="organisation_id">
         {{ _('Organisation name') }}
       </label>
 
       <select class="form-control form-control-1-1 " name="organisation_name">
-        {% for option in form.organisation_name %}
+        {% for option in form.organisation_id %}
 
         {% set checked = "" %}
         {% if option.checked %}
