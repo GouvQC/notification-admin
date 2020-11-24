@@ -15,6 +15,7 @@ from app import (
     notification_api_client,
     platform_stats_api_client,
     service_api_client,
+    organisations_api_client,
 )
 from app.extensions import antivirus_client, redis_client
 from app.main import main
@@ -343,31 +344,44 @@ def usage_for_all_services_by_organisation():
     form = OrganisationName()
 
     if form.validate_on_submit():
-        organisation_name = form.organisation_name.data
+        organisation_id = form.organisation_id.data
         start_date = form.start_date.data
         end_date = form.end_date.data
-        # headers = ["organisation_id", "organisation_name", "service_id", "service_name",
-        #           "sms_cost", "sms_fragments", "letter_cost", "letter_breakdown"]
+        headers = ["organisation_id", "organisation_name", "service_id", "service_name",
+                  "sms_cost", "sms_fragments", "letter_cost", "letter_breakdown"]
 
-        # result =  billing_api_client.get_usage_for_all_services_by_organisation(start_date, end_date)
-        # rows = [
-        #     [
-        #         r['organisation_id'], r["organisation_name"], r["service_id"], r["service_name"],
-        #         r["sms_cost"], r['sms_fragments'], r["letter_cost"], r["letter_breakdown"].strip()
-        #     ]
-        #     for r in result
-        # ]
-        # if rows:
-        #     return Spreadsheet.from_rows([headers] + rows).as_csv_data, 200, {
-        #         'Content-Type': 'text/csv; charset=utf-8',
-        #         'Content-Disposition': 'attachment; filename="Usage for all services from {} to {}.csv"'.format(
-        #             start_date, end_date
-        #         )
-        #     }
-        # else:
-        #     flash('No results for dates')
-        flash('On a réussi à peser sur le bouton  ' + str(organisation_name) + ' ' + str(start_date) + ' ' + str(end_date))
+        result =  billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
+        rows = [
+            [
+                r['organisation_id'], r["organisation_name"], r["service_id"], r["service_name"],
+                r["sms_cost"], r['sms_fragments'], r["letter_cost"], r["letter_breakdown"].strip()
+            ]
+            for r in result
+        ]
+        if rows:
+            return Spreadsheet.from_rows([headers] + rows).as_csv_data, 200, {
+                'Content-Type': 'text/csv; charset=utf-8',
+                'Content-Disposition': 'attachment; filename="Usage for all services from {} to {}.csv"'.format(
+                    start_date, end_date
+                )
+            }
+        else:
+            flash('No results for dates')
+        flash('On a réussi à peser sur le bouton  ' + str(organisation_id) + ' ' + str(start_date) + ' ' + str(end_date))
+
+    # METTRE ÇA EN PLACE
+    # api_key_list = api_key_api_client.get_api_keys_ranked_by_notifications_created(n_days_back)
+    # return render_template(
+    #     'views/platform-admin/api_keys_ranked.html',
+    #     api_key_list=api_key_list
+    # )
+    
+    # oganisations_list = organisations_api_client.get_organisations
+    
+
+    #Remplir la liste en dehors du IF <- reculer de 1 de pour l'indentation ;)
     return render_template('views/platform-admin/usage_for_all_services_by_organisation.html', form=form)
+    
 
 
 @main.route("/platform-admin/complaints")

@@ -859,7 +859,7 @@ class SupportType(StripWhitespaceForm):
 
 
 class OrganisationName(StripWhitespaceForm):
-    organisation_name = SelectField(
+    organisation_id = SelectField(
         'Organisation Name',
         choices=[
             (_l('0'), _l('RQ')),
