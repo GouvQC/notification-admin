@@ -348,9 +348,9 @@ def usage_for_all_services_by_organisation():
         start_date = form.start_date.data
         end_date = form.end_date.data
         headers = ["organisation_id", "organisation_name", "service_id", "service_name",
-                  "sms_cost", "sms_fragments", "letter_cost", "letter_breakdown"]
+                    "sms_cost", "sms_fragments", "letter_cost", "letter_breakdown"]
 
-        result =  billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
+        result = billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
         rows = [
             [
                 r['organisation_id'], r["organisation_name"], r["service_id"], r["service_name"],
@@ -365,6 +365,7 @@ def usage_for_all_services_by_organisation():
                     start_date, end_date
                 )
             }
+            oganisations_list = organisations_api_client.get_organisations
         else:
             flash('No results for dates')
         flash('On a réussi à peser sur le bouton  ' + str(organisation_id) + ' ' + str(start_date) + ' ' + str(end_date))
@@ -375,7 +376,6 @@ def usage_for_all_services_by_organisation():
     #     'views/platform-admin/api_keys_ranked.html',
     #     api_key_list=api_key_list
     # )
-    oganisations_list = organisations_api_client.get_organisations
 
     # Remplir la liste en dehors du IF <- reculer de 1 de pour l'indentation ;)
     return render_template('views/platform-admin/usage_for_all_services_by_organisation.html', form=form)
