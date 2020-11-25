@@ -348,7 +348,7 @@ def usage_for_all_services_by_organisation():
         start_date = form.start_date.data
         end_date = form.end_date.data
         headers = ["organisation_id", "organisation_name", "service_id", "service_name",
-                    "sms_cost", "sms_fragments", "letter_cost", "letter_breakdown"]
+                   "sms_cost", "sms_fragments", "letter_cost", "letter_breakdown"]
 
         result = billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
         rows = [
@@ -366,6 +366,7 @@ def usage_for_all_services_by_organisation():
                 )
             }
             oganisations_list = organisations_api_client.get_organisations
+            flash(str(oganisations_list))
         else:
             flash('No results for dates')
         flash('On a réussi à peser sur le bouton  ' + str(organisation_id) + ' ' + str(start_date) + ' ' + str(end_date))
