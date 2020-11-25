@@ -375,13 +375,10 @@ def usage_for_all_services_by_organisation():
     #     'views/platform-admin/api_keys_ranked.html',
     #     api_key_list=api_key_list
     # )
-    
-    # oganisations_list = organisations_api_client.get_organisations
-    
+    oganisations_list = organisations_api_client.get_organisations
 
-    #Remplir la liste en dehors du IF <- reculer de 1 de pour l'indentation ;)
+    # Remplir la liste en dehors du IF <- reculer de 1 de pour l'indentation ;)
     return render_template('views/platform-admin/usage_for_all_services_by_organisation.html', form=form)
-    
 
 
 @main.route("/platform-admin/complaints")

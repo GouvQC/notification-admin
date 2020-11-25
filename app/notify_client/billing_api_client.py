@@ -44,7 +44,7 @@ class BillingAPIClient(NotifyAdminAPIClient):
     def get_usage_for_all_services_by_organisation(self, organisation_id, start_date, end_date):
         return self.get(url='/platform-stats/usage-for-all-services-by-organisation',
                         params={
-                            'organisation_id' : str(organisation_id),
+                            'organisation_id': str(organisation_id),
                             'start_date': str(start_date),
                             'end_date': str(end_date),
                         })
