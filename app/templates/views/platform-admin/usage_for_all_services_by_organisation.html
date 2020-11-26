@@ -17,8 +17,8 @@
         {{ _('Organisation name') }}
       </label>
 
-      <select class="form-control form-control-1-1 " name="organisation_id">
-        <!-- {% for option in form.organisation_id %}
+      <!-- <select class="form-control form-control-1-1 " name="organisation_id">
+        {% for option in form.organisation_id %}
 
           {% set checked = "" %}
           {% if option.checked %}
@@ -26,7 +26,7 @@
           {% endif %}
           
           <option {{checked}} value="{{ option.data }}">{{ option.label.text }}</option>
-        {% endfor %} -->
+        {% endfor %}
 
         {% for org in organisations %}
 
@@ -37,7 +37,7 @@
           
           <option {{checked}} value="{{ org.id }}">{{ org.name }}</option>
         {% endfor %}
-      </select>
+      </select> -->
     </div>
     {{ textbox(form.start_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
     {{ textbox(form.end_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
