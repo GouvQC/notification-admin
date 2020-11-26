@@ -18,8 +18,6 @@ from app import (
     organisations_client,
 )
 
-
-
 from app.extensions import antivirus_client, redis_client
 from app.main import main
 from app.main.forms import (
@@ -381,7 +379,11 @@ def usage_for_all_services_by_organisation():
     # oganisations_list = organisations_api_client.get_organisations
 
     # Remplir la liste en dehors du IF <- reculer de 1 de pour l'indentation ;)
-    return render_template('views/platform-admin/usage_for_all_services_by_organisation.html', form=form, organisations=organisations_client.get_organisation)
+    return render_template(
+        'views/platform-admin/usage_for_all_services_by_organisation.html',
+        form=form,
+        organisations=organisations_client.get_organisation
+    )
 
 
 @main.route("/platform-admin/complaints")
