@@ -17,7 +17,6 @@ from app import (
     service_api_client,
 )
 
-from app.notify_client.organisations_api_client import organisations_client
 from app.models.organisation import Organisations
 
 from app.extensions import antivirus_client, redis_client
