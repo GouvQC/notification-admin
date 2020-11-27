@@ -1,4 +1,5 @@
 import itertools
+import json
 import re
 from collections import OrderedDict
 from datetime import datetime
@@ -26,6 +27,7 @@ from app.main.forms import (
     PDFUploadForm,
     RequiredDateFilterForm,
     ReturnedLettersForm,
+    GetServicesByOrganisationForm,
 )
 from app.notify_client.api_key_api_client import api_key_api_client
 from app.statistics_utils import (
@@ -341,10 +343,10 @@ def usage_for_all_services():
 @main.route("/platform-admin/reports/usage-for-all-services-by-organisation", methods=['GET', 'POST'])
 @user_is_platform_admin
 def usage_for_all_services_by_organisation():
-    form = RequiredDateFilterForm()
+    form = GetServicesByOrganisationForm()
 
     if form.validate_on_submit():
-        organisation_id = form.organisation_id.data
+        organisation_id = form.organisations.data
         start_date = form.start_date.data
         end_date = form.end_date.data
         headers = ["organisation_id", "organisation_name", "service_id", "service_name",
@@ -369,10 +371,11 @@ def usage_for_all_services_by_organisation():
             flash('No results for dates')
         flash('On a réussi à peser sur le bouton  ' + str(organisation_id) + ' ' + str(start_date) + ' ' + str(end_date))
 
+    flash('Voici ENFIN LE JSON ' + json.dumps(organisations_client.get_organisation)
+
     return render_template(
         'views/platform-admin/usage_for_all_services_by_organisation.html',
-        form=form,
-        organisations=organisations_client.get_organisation
+        form=form
     )
 
 
