@@ -16,7 +16,6 @@ from app import (
     notification_api_client,
     platform_stats_api_client,
     service_api_client,
-    organisations_client,
 )
 
 from app.extensions import antivirus_client, redis_client
@@ -370,8 +369,7 @@ def usage_for_all_services_by_organisation():
         else:
             flash('No results for dates')
         flash('On a réussi à peser sur le bouton  ' + str(organisation_id) + ' ' + str(start_date) + ' ' + str(end_date))
-
-    flash('Voici ENFIN LE JSON ' + json.dumps(organisations_client.get_organisation))
+        # flash('Voici ENFIN LE JSON ' + json.dumps(organisations_client.get_organisation))
 
     return render_template(
         'views/platform-admin/usage_for_all_services_by_organisation.html',
