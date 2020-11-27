@@ -875,6 +875,7 @@ class ContactNotifyTeam(StripWhitespaceForm):
     phone = StringField(_l('Your phone'))
     feedback = TextAreaField(_l('Message'), validators=[DataRequired(message=not_empty)])
 
+
 class GetServicesByOrganisationForm(StripWhitespaceForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -885,6 +886,7 @@ class GetServicesByOrganisationForm(StripWhitespaceForm):
     organisations = SelectField()
     start_date = DateField("Start Date")
     end_date = DateField("End Date")
+
 
 class SelectLogoForm(StripWhitespaceForm):
     def __init__(self, *args, **kwargs):
