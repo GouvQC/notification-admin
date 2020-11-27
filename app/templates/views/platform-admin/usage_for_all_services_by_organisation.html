@@ -17,6 +17,25 @@
         {{ _('Organisation name') }}
       </label>
 
+      <select class="form-control form-control-1-1 " name="organisation_id">
+        {% for org in organisations %}
+          <option value="{{ org.id }}">{{ org.name }}</option>
+        {% endfor %}
+      </select>
+
+      {% for org in organisations %}
+      <li class="browse-list-item">
+        <a href="{{ url_for('main.organisation_dashboard', org_id=org.id) }}" class="browse-list-link">{{ org.name }}</a>
+        <p class="browse-list-hint">
+          {{ org.count_of_live_services }}
+          {{ _('live service(s)') }}
+        </p>
+        {% if not org.active %}
+          <span class="table-field-status-default heading-medium">- {{_('archived') }}</span>
+        {% endif %}
+      </li>
+    {% endfor %}
+
     </div>
     {{ textbox(form.start_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
     {{ textbox(form.end_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
