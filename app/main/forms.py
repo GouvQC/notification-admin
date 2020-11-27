@@ -876,16 +876,16 @@ class ContactNotifyTeam(StripWhitespaceForm):
     feedback = TextAreaField(_l('Message'), validators=[DataRequired(message=not_empty)])
 
 
-class GetServicesByOrganisationForm(StripWhitespaceForm):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.organisations.choices = kwargs['choices']
-        self.organisations.label.text = kwargs['label']
-        self.organisations.validators = [DataRequired()]
+# class GetServicesByOrganisationForm(StripWhitespaceForm):
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.organisations.choices = kwargs['choices']
+#         self.organisations.label.text = kwargs['label']
+#         self.organisations.validators = [DataRequired()]
 
-    organisations = SelectField()
-    start_date = DateField("Start Date")
-    end_date = DateField("End Date")
+#     organisations = SelectField()
+#     start_date = DateField("Start Date")
+#     end_date = DateField("End Date")
 
 
 class SelectLogoForm(StripWhitespaceForm):

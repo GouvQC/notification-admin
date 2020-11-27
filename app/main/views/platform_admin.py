@@ -26,7 +26,6 @@ from app.main.forms import (
     PDFUploadForm,
     RequiredDateFilterForm,
     ReturnedLettersForm,
-    GetServicesByOrganisationForm,
 )
 from app.notify_client.api_key_api_client import api_key_api_client
 from app.statistics_utils import (
@@ -342,7 +341,7 @@ def usage_for_all_services():
 @main.route("/platform-admin/reports/usage-for-all-services-by-organisation", methods=['GET', 'POST'])
 @user_is_platform_admin
 def usage_for_all_services_by_organisation():
-    form = GetServicesByOrganisationForm()
+    form = RequiredDateFilterForm()
 
     if form.validate_on_submit():
         organisation_id = form.organisations.data
