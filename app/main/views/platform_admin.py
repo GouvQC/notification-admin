@@ -16,6 +16,7 @@ from app import (
     notification_api_client,
     platform_stats_api_client,
     service_api_client,
+    organisations_client,
 )
 
 from app.extensions import antivirus_client, redis_client
