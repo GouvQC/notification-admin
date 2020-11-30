@@ -858,21 +858,6 @@ class SupportType(StripWhitespaceForm):
     )
 
 
-class OrganisationName(StripWhitespaceForm):
-    organisation_id = SelectField(
-        'Organisation Name',
-        choices=[
-            (_l('0'), _l('RQ')),
-            (_l('1'), _l('ITQ')),
-            (_l('2'), _l('Feds')),
-            (_l('3'), _l('Gouv')),
-        ],
-        validators=[DataRequired()]
-    )
-    start_date = DateField("Start Date")
-    end_date = DateField("End Date")
-
-
 class ContactNotifyTeam(StripWhitespaceForm):
     not_empty = _l('This cannot be empty')
     name = StringField(_l('Your name'), validators=[DataRequired(message=not_empty)])
@@ -889,6 +874,18 @@ class ContactNotifyTeam(StripWhitespaceForm):
     email_address = email_address(label=_l('Your email'), gov_user=False)
     phone = StringField(_l('Your phone'))
     feedback = TextAreaField(_l('Message'), validators=[DataRequired(message=not_empty)])
+
+
+# class GetServicesByOrganisationForm(StripWhitespaceForm):
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.organisations.choices = kwargs['choices']
+#         self.organisations.label.text = kwargs['label']
+#         self.organisations.validators = [DataRequired()]
+
+#     organisations = SelectField()
+#     start_date = DateField("Start Date")
+#     end_date = DateField("End Date")
 
 
 class SelectLogoForm(StripWhitespaceForm):
