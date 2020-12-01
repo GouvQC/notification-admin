@@ -199,7 +199,8 @@ def edit_organisation_name(org_id):
     if form.validate_on_submit():
         unique_name = organisations_client.is_organisation_name_unique(org_id, form.name.data)
         if not unique_name:
-            form.name.errors.append("This organisation name is already in use")
+            form.name.errors.append("This 
+           is already in use")
             return render_template('views/organisations/organisation/settings/edit-name/index.html', form=form)
         session['organisation_name_change'] = form.name.data
         return redirect(url_for('.confirm_edit_organisation_name', org_id=org_id))
