@@ -1,5 +1,4 @@
 import itertools
-# import json
 import re
 from collections import OrderedDict
 from datetime import datetime
@@ -16,8 +15,9 @@ from app import (
     notification_api_client,
     platform_stats_api_client,
     service_api_client,
-    organisations_client,
 )
+
+from app.models.organisation import Organisations
 
 from app.extensions import antivirus_client, redis_client
 from app.main import main
@@ -369,12 +369,15 @@ def usage_for_all_services_by_organisation():
         # else:
         #     flash('No results for dates')
         # flash('On a réussi à peser sur le bouton  ' + str(organisation_id) + ' ' + str(start_date) + ' ' + str(end_date))
+
+        # organisations = organisations_client.get_organisations()
         flash('On a réussi à peser sur le bouton  ' + str(start_date) + ' ' + str(end_date))
-        flash('Voici ENFIN LE JSON ' + vars(organisations_client.get_organisations))
+        # flash('Voici ENFIN LE JSON 2 ' + type(organisations).__name__)
 
     return render_template(
         'views/platform-admin/usage_for_all_services_by_organisation.html',
-        form=form
+        form=form,
+        organisations=Organisations()
     )
 
 
