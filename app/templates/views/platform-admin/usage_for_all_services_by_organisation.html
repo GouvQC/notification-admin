@@ -13,16 +13,10 @@
 
   {% call form_wrapper() %}
     <div class="form-group">
-      <label class="form-label" for="organisation_id">
+      <label class="form-label" for="organisations">
         {{ _('Organisation name') }}
       </label>
-
-      <select class="form-control form-control-1-1 " name="organisation_id">
-        {% for org in organisations %}
-          <option value="{{ org.id }}">{{ org.name }}</option>
-        {% endfor %}
-      </select>
-
+      {{ form.organisations(class="form-control form-control-1-1") }}
     </div>
     {{ textbox(form.start_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
     {{ textbox(form.end_date, hint=_('Enter start date in format YYYY-MM-DD')) }}
