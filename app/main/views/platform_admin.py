@@ -345,7 +345,7 @@ def usage_for_all_services():
 def usage_for_all_services_by_organisation():
     form = GetServicesByOrganisationForm()
     form.organisations.choices = [(org.id, org.name) for org in Organisations()]
-    
+
     if form.validate_on_submit():
         organisation_id = form.organisations.data
         start_date = form.start_date.data
