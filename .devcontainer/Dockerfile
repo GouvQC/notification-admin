@@ -7,6 +7,7 @@ RUN apk add --no-cache build-base libxml2-dev libxslt-dev git nodejs npm g++ mak
 
 # update pip
 RUN python -m pip install wheel
+RUN python -m pip install --upgrade pip
 
 RUN set -ex && mkdir /app
 
