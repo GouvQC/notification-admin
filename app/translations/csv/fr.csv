@@ -860,6 +860,8 @@
 "Usage for all services by organisation","Utilisation pour tous les services par organisation"
 "Organisation name","Nom de l'organisation"
 "Enter start date in format YYYY-MM-DD","Inscriver la date de début dans le format AAAA-MM-JJ"
+"Start Date","Date de début"
+"End Date","Date de fin"
 "To use GC Notify, there’s:","Pour utiliser GC Notification il y a :"
 "no monthly charge","aucun frais mensuel"
 "no setup fee","aucun frais d'installation"

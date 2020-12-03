@@ -878,8 +878,8 @@ class ContactNotifyTeam(StripWhitespaceForm):
 
 class GetServicesByOrganisationForm(StripWhitespaceForm):
     organisations = SelectField(_l('Organisation name'), choices=[])
-    start_date = DateField("Start Date")
-    end_date = DateField("End Date")
+    start_date = DateField(_l("Start Date"))
+    end_date = DateField(_l("End Date"))
 
 
 class SelectLogoForm(StripWhitespaceForm):
@@ -1228,8 +1228,8 @@ class DateFilterForm(StripWhitespaceForm):
 
 
 class RequiredDateFilterForm(StripWhitespaceForm):
-    start_date = DateField("Start Date")
-    end_date = DateField("End Date")
+    start_date = DateField(_l("Start Date"))
+    end_date = DateField(_l("End Date"))
 
 
 class SearchByNameForm(StripWhitespaceForm):
