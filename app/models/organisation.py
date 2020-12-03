@@ -55,6 +55,7 @@ class Organisation(JSONModel):
     def create_from_form(cls, form):
         return cls.create(
             name=form.name.data,
+            sagir_code=form.sagir_code.data,
             crown={
                 'crown': True,
                 'non-crown': False,
@@ -64,9 +65,10 @@ class Organisation(JSONModel):
         )
 
     @classmethod
-    def create(cls, name, crown, organisation_type, agreement_signed=False):
+    def create(cls, name, sagir_code, crown, organisation_type, agreement_signed=False):
         return cls(organisations_client.create_organisation(
             name=name,
+            sagir_code=sagir_code,
             crown=crown,
             organisation_type=organisation_type,
             agreement_signed=agreement_signed,

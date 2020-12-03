@@ -552,11 +552,15 @@ class SMTPForm(StripWhitespaceForm):
 
 class RenameOrganisationForm(StripWhitespaceForm):
     name = StringField(
-        u'Organisation name',
+        _l('Organisation name'),
         validators=[
             DataRequired(message=_l('This cannot be empty'))
         ])
 
+class SagirCode(StripWhitespaceForm):
+    sagir_code = StringField(
+        _l('SAGIR Code'),
+        validators=[])
 
 class OrganisationOrganisationTypeForm(StripWhitespaceForm):
     organisation_type = OrganisationTypeField('What type of organisation is this?')
@@ -640,6 +644,7 @@ class SecurityKeyForm(StripWhitespaceForm):
 
 class NewOrganisationForm(
     RenameOrganisationForm,
+    SagirCode,
     OrganisationOrganisationTypeForm,
     OrganisationCrownStatusForm,
 ):
@@ -878,8 +883,8 @@ class ContactNotifyTeam(StripWhitespaceForm):
 
 class GetServicesByOrganisationForm(StripWhitespaceForm):
     organisations = SelectField(_l('Organisation name'), choices=[])
-    start_date = DateField("Start Date")
-    end_date = DateField("End Date")
+    start_date = DateField(_l("Start Date"))
+    end_date = DateField(_l("End Date"))
 
 
 class SelectLogoForm(StripWhitespaceForm):
@@ -1228,8 +1233,8 @@ class DateFilterForm(StripWhitespaceForm):
 
 
 class RequiredDateFilterForm(StripWhitespaceForm):
-    start_date = DateField("Start Date")
-    end_date = DateField("End Date")
+    start_date = DateField(_l("Start Date"))
+    end_date = DateField(_l("End Date"))
 
 
 class SearchByNameForm(StripWhitespaceForm):
