@@ -25,6 +25,7 @@
           {{ page_header(_('New organisation')) }}
           {% call form_wrapper() %}
             {{textbox(form.name)}}
+            {{textbox(form.sagir_code)}}
             {{radios(form.organisation_type)}}
             <input type="hidden" name="organisation_type" value="central" />
             {{radios(form.crown_status)}}

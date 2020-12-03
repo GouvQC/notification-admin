@@ -552,11 +552,15 @@ class SMTPForm(StripWhitespaceForm):
 
 class RenameOrganisationForm(StripWhitespaceForm):
     name = StringField(
-        u'Organisation name',
+        _l('Organisation name'),
         validators=[
             DataRequired(message=_l('This cannot be empty'))
         ])
 
+class SagirCode(StripWhitespaceForm):
+    sagir_code = StringField(
+        _l('SAGIR Code'),
+        validators=[])
 
 class OrganisationOrganisationTypeForm(StripWhitespaceForm):
     organisation_type = OrganisationTypeField('What type of organisation is this?')
@@ -640,6 +644,7 @@ class SecurityKeyForm(StripWhitespaceForm):
 
 class NewOrganisationForm(
     RenameOrganisationForm,
+    SagirCode,
     OrganisationOrganisationTypeForm,
     OrganisationCrownStatusForm,
 ):

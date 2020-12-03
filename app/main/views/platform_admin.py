@@ -331,7 +331,7 @@ def usage_for_all_services():
         if rows:
             return Spreadsheet.from_rows([headers] + rows).as_csv_data, 200, {
                 'Content-Type': 'text/csv; charset=utf-8',
-                'Content-Disposition': 'attachment; filename="Usage for all services from {} to {}.csv"'.format(
+                'Content-Disposition': 'attachment; filename="Usage for all services by organisation from {} to {}.csv"'.format(
                     start_date, end_date
                 )
             }
