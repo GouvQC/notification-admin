@@ -558,7 +558,7 @@ class RenameOrganisationForm(StripWhitespaceForm):
         ])
 
 
-class SagirCode(StripWhitespaceForm):
+class OrganisationSagirCodeForm(StripWhitespaceForm):
     sagir_code = StringField(
         _l('SAGIR Code'),
         validators=[])
@@ -646,7 +646,7 @@ class SecurityKeyForm(StripWhitespaceForm):
 
 class NewOrganisationForm(
     RenameOrganisationForm,
-    SagirCode,
+    OrganisationSagirCodeForm,
     OrganisationOrganisationTypeForm,
     OrganisationCrownStatusForm,
 ):

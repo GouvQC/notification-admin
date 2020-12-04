@@ -1,0 +1,25 @@
+{% extends "org_template.html" %}
+{% from "components/page-header.html" import page_header %}
+{% from "components/page-footer.html" import page_footer %}
+{% from "components/textbox.html" import textbox %}
+{% from "components/form.html" import form_wrapper %}
+
+{% block org_page_title %}
+{{ _('Change SAGIR code') }}
+{% endblock %}
+
+{% block maincolumn_content %}
+
+{{
+ page_header(
+    _('Change SAGIR code'),
+    back_link=url_for('.organisation_settings', org_id=current_org.id)
+  )
+}}
+
+{% call form_wrapper() %}
+  {{textbox(form.sagir_code)}}
+  {{ page_footer(_('Save')) }}
+{% endcall %}
+
+{% endblock %}

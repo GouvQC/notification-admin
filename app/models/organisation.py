@@ -21,6 +21,7 @@ class Organisation(JSONModel):
     ALLOWED_PROPERTIES = {
         'id',
         'name',
+        'sagir_code',
         'active',
         'blocked',
         'crown',
