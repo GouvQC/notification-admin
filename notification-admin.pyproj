@@ -636,6 +636,7 @@
     <Content Include="app\templates\views\organisations\index.html" />
     <Content Include="app\templates\views\organisations\organisation\index.html" />
     <Content Include="app\templates\views\organisations\organisation\settings\edit-agreement.html" />
+    <Content Include="app\templates\views\organisations\organisation\settings\edit-sagir-code.html" />
     <Content Include="app\templates\views\organisations\organisation\settings\edit-crown-status.html" />
     <Content Include="app\templates\views\organisations\organisation\settings\edit-domains.html" />
     <Content Include="app\templates\views\organisations\organisation\settings\edit-go-live-notes.html" />

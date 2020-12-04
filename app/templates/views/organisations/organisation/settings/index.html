@@ -24,6 +24,15 @@
         }}
       {% endcall %}
       {% call row() %}
+        {{ text_field('SAGIR Code') }}
+        {{ text_field(current_org.sagir_code) }}
+        {{ edit_field(
+            'Change',
+            url_for('.edit_organisation_sagir_code', org_id=current_org.id)
+          )
+        }}
+      {% endcall %}
+      {% call row() %}
         {{ text_field('Sector') }}
         {{ optional_text_field(current_org.organisation_type_label) }}
         {{ edit_field(

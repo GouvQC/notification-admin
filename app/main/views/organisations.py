@@ -31,6 +31,7 @@ from app.main.forms import (
     SearchUsersForm,
     SetEmailBranding,
     SetLetterBranding,
+    OrganisationSagirCodeForm,
 )
 from app.main.views.service_settings import get_branding_as_value_and_label
 from app.models.organisation import Organisation, Organisations
@@ -206,6 +207,27 @@ def edit_organisation_name(org_id):
 
     return render_template(
         'views/organisations/organisation/settings/edit-name/index.html',
+        form=form,
+    )
+
+
+@main.route("/organisations/<org_id>/settings/edit-sagir-code", methods=['GET', 'POST'])
+@user_is_platform_admin
+def edit_organisation_sagir_code(org_id):
+    form = OrganisationSagirCodeForm()
+
+    if request.method == 'GET':
+        form.sagir_code.data = current_organisation.sagir_code
+
+    if form.validate_on_submit():
+        organisations_client.update_organisation_sagir_code(
+            current_organisation.id,
+            sagir_code=form.sagir_code.data,
+        )
+        return redirect(url_for('.organisation_settings', org_id=org_id))
+
+    return render_template(
+        'views/organisations/organisation/settings/edit-sagir-code.html',
         form=form,
     )
 
