@@ -344,7 +344,13 @@ def usage_for_all_services():
 @user_is_platform_admin
 def usage_for_all_services_by_organisation():
     form = GetServicesByOrganisationForm()
-    form.organisations.choices = [(org.id, org.name) for org in Organisations()]
+    list_organisation = [("","Tous")]
+
+    for org in Organisations():
+        list_organisation.append(tuple((org.id,org.name)))
+
+    form.organisations.choices = list_organisation
+
 
     if form.validate_on_submit():
         organisation_id = form.organisations.data
@@ -352,25 +358,37 @@ def usage_for_all_services_by_organisation():
         end_date = form.end_date.data
 
         headers = ["organisation_id", "organisation_name", "service_id", "service_name",
-                   "sms_cost", "sms_fragments", "letter_cost", "letter_breakdown"]
+                   "notification_id", "notification_type"]
 
         result = billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
+
         rows = [
             [
                 r['organisation_id'], r["organisation_name"], r["service_id"], r["service_name"],
-                r["sms_cost"], r['sms_fragments'], r["letter_cost"], r["letter_breakdown"].strip()
+                r["notification_id"], r['notification_type']
             ]
             for r in result
         ]
+
+        print('rows : ' + str(len(rows)))
+
         if rows:
             return Spreadsheet.from_rows([headers] + rows).as_csv_data, 200, {
                 'Content-Type': 'text/csv; charset=utf-8',
-                'Content-Disposition': 'attachment; filename="Usage for all services from {} to {}.csv"'.format(
+                'Content-Disposition': 'attachment; filename="Usage for all services by organisation from {} to {}.csv"'.format(
                     start_date, end_date
                 )
             }
+            
         else:
             flash('No results for dates')
+
+        # return Spreadsheet.from_rows([headers]).as_csv_data, 200, {
+        #     'Content-Type': 'text/csv; charset=utf-8',
+        #     'Content-Disposition': 'attachment; filename="Usage for all services from {} to {}.csv"'.format(
+        #         start_date, end_date
+        #     )
+        # }
 
     return render_template(
         'views/platform-admin/usage_for_all_services_by_organisation.html',
