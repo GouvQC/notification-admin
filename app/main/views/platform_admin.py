@@ -1,5 +1,7 @@
 import itertools
 import re
+import json
+from openpyxl import Workbook
 from collections import OrderedDict
 from datetime import datetime
 
@@ -357,25 +359,35 @@ def usage_for_all_services_by_organisation():
         start_date = form.start_date.data
         end_date = form.end_date.data
 
-        headers = ["organisation_id", "organisation_name", "service_id", "service_name",
-                   "notification_id", "notification_type"]
+        headers = ["Start Date","End Date","Organisation ID", "Organisation name", "Sagir Code", "Service ID", "Service Name",
+                   "Restricted", "Details Type", "Provider Name", "Number Sent", "Billable units"]
 
         result = billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
 
-        rows = [
-            [
-                r['organisation_id'], r["organisation_name"], r["service_id"], r["service_name"],
-                r["notification_id"], r['notification_type']
-            ]
-            for r in result
-        ]
+        rows = []
+        for key, value in result["PGNUtilization"]["Organisations"].items():
+            print ("Key 1st : " + str(key) + " value 1st :" + str(value) + " type " + type(value).__name__)
+            for servKey, servValue in value["services"].items():
+                print ("Key 2 : " + str(servKey) + " value 2 :" + str(servValue))
+                print("AVANT")
+                details = {**{"email" , servValue["email_details"]}, **{"sms", servValue["sms_details"]}}
+                print("APRÈS")
+                for detailsKey, detailsValue in details.items():
+                    if detailsKey == "sms":
+                        details_type = "Email"
+                    else:
+                        details_type = "SMS"
 
-        print('rows : ' + str(len(rows)))
+                    rows += [start_date, end_date, value["organisation_id"], key, value["sagir_code"], servValue["service_id"], servKey, 
+                                servValue["restricted"], details_type, detailsValue["providers"]["provider"], detailsValue["providers"]["number_sent"], detailsValue["providers"]["billable_units"]]
 
-        if rows:
-            return Spreadsheet.from_rows([headers] + rows).as_csv_data, 200, {
-                'Content-Type': 'text/csv; charset=utf-8',
-                'Content-Disposition': 'attachment; filename="Usage for all services by organisation from {} to {}.csv"'.format(
+        for items in rows:
+            print(items)
+
+        if result:
+            return Spreadsheet.from_rows([headers] + rows).as_excel_file, 200, {
+                'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition': 'attachment; filename="Usage for all services by organisation from {} to {}.xlsx"'.format(
                     start_date, end_date
                 )
             }
