@@ -1,7 +1,6 @@
 import itertools
 import re
 import json
-from openpyxl import Workbook
 from collections import OrderedDict
 from datetime import datetime
 
@@ -365,21 +364,26 @@ def usage_for_all_services_by_organisation():
         result = billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
 
         rows = []
-        for key, value in result["PGNUtilization"]["Organisations"].items():
-            print ("Key 1st : " + str(key) + " value 1st :" + str(value) + " type " + type(value).__name__)
+        for key, value in result["data"]["PGNUtilization"]["Organisations"].items():
             for servKey, servValue in value["services"].items():
-                print ("Key 2 : " + str(servKey) + " value 2 :" + str(servValue))
-                print("AVANT")
-                details = {**{"email" , servValue["email_details"]}, **{"sms", servValue["sms_details"]}}
-                print("APRÈS")
-                for detailsKey, detailsValue in details.items():
-                    if detailsKey == "sms":
-                        details_type = "Email"
-                    else:
-                        details_type = "SMS"
+                details = {}
+                if servValue["email_details"] != {}:
+                    details["email"] = servValue["email_details"]
 
-                    rows += [start_date, end_date, value["organisation_id"], key, value["sagir_code"], servValue["service_id"], servKey, 
-                                servValue["restricted"], details_type, detailsValue["providers"]["provider"], detailsValue["providers"]["number_sent"], detailsValue["providers"]["billable_units"]]
+                if servValue["sms_details"] != {}:
+                    details["sms"] = servValue["sms_details"]
+
+                for detailsKey, detailsValue in details.items():
+                    for subDetailsKey, subDetailsValue in detailsValue["providers"].items():
+                        if detailsKey == "sms":
+                            details_type = "SMS"
+                            details_billable = subDetailsValue["billable_units"]
+                        else:
+                            details_type = "Email"
+                            details_billable = "N/A"
+
+                    rows.append([str(start_date), str(end_date), value["organisation_id"], key, value["sagir_code"], servValue["service_id"], servKey, 
+                                servValue["restricted"], details_type, subDetailsKey, subDetailsValue["number_sent"], details_billable])
 
         for items in rows:
             print(items)
@@ -394,13 +398,6 @@ def usage_for_all_services_by_organisation():
             
         else:
             flash('No results for dates')
-
-        # return Spreadsheet.from_rows([headers]).as_csv_data, 200, {
-        #     'Content-Type': 'text/csv; charset=utf-8',
-        #     'Content-Disposition': 'attachment; filename="Usage for all services from {} to {}.csv"'.format(
-        #         start_date, end_date
-        #     )
-        # }
 
     return render_template(
         'views/platform-admin/usage_for_all_services_by_organisation.html',
