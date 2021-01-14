@@ -363,6 +363,8 @@ def usage_for_all_services_by_organisation():
 
         result = billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
 
+        print('JSON DUMP : ' + json.dumps(result), flush=True)
+
         rows = []
         for key, value in result["data"]["PGNUtilization"]["Organisations"].items():
             for servKey, servValue in value["services"].items():
