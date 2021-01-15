@@ -36,10 +36,10 @@ from app.statistics_utils import (
 )
 from app.template_previews import validate_letter
 from app.utils import (
-    Spreadsheet,
     generate_next_dict,
     generate_previous_dict,
     get_page_from_request,
+    Spreadsheet,
     user_has_permissions,
     user_is_platform_admin,
 )
