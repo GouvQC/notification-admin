@@ -345,25 +345,24 @@ def usage_for_all_services():
 @user_is_platform_admin
 def usage_for_all_services_by_organisation():
     form = GetServicesByOrganisationForm()
-    list_organisation = [("","Tous")]
+    list_organisation = [("", "Tous")]
 
     for org in Organisations():
-        list_organisation.append(tuple((org.id,org.name)))
+        list_organisation.append(tuple((org.id, org.name)))
 
     form.organisations.choices = list_organisation
-
 
     if form.validate_on_submit():
         organisation_id = form.organisations.data
         start_date = form.start_date.data
         end_date = form.end_date.data
 
-        headers = ["Start Date","End Date","Organisation ID", "Organisation name", "Sagir Code", "Service ID", "Service Name",
+        headers = ["Start Date", "End Date", "Organisation ID", "Organisation name", "Sagir Code", "Service ID", "Service Name",
                    "Restricted", "Details Type", "Provider Name", "Number Sent", "Billable units"]
 
         result = billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
 
-        print('JSON DUMP : ' + json.dumps(result), flush=True)
+        #print('JSON DUMP : ' + json.dumps(result), flush=True)
 
         rows = []
         for key, value in result["data"]["PGNUtilization"]["Organisations"].items():
@@ -384,11 +383,12 @@ def usage_for_all_services_by_organisation():
                             details_type = "Email"
                             details_billable = "N/A"
 
-                    rows.append([str(start_date), str(end_date), value["organisation_id"], key, value["sagir_code"], servValue["service_id"], servKey, 
-                                servValue["restricted"], details_type, subDetailsKey, subDetailsValue["number_sent"], details_billable])
+                    rows.append([str(start_date), str(end_date), value["organisation_id"], key, value["sagir_code"],
+                                servValue["service_id"], servKey, servValue["restricted"], details_type, subDetailsKey,
+                                subDetailsValue["number_sent"], details_billable])
 
-        for items in rows:
-            print(items)
+        #for items in rows:
+        #    print(items)
 
         if result:
             return Spreadsheet.from_rows([headers] + rows).as_excel_file, 200, {
@@ -397,7 +397,7 @@ def usage_for_all_services_by_organisation():
                     start_date, end_date
                 )
             }
-            
+
         else:
             flash('No results for dates')
 
