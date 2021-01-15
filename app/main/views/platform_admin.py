@@ -1,6 +1,5 @@
 import itertools
 import re
-import json
 from collections import OrderedDict
 from datetime import datetime
 
@@ -362,7 +361,7 @@ def usage_for_all_services_by_organisation():
 
         result = billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
 
-        #print('JSON DUMP : ' + json.dumps(result), flush=True)
+        # print('JSON DUMP : ' + json.dumps(result), flush=True)
 
         rows = []
         for key, value in result["data"]["PGNUtilization"]["Organisations"].items():
@@ -387,7 +386,7 @@ def usage_for_all_services_by_organisation():
                                 servValue["service_id"], servKey, servValue["restricted"], details_type, subDetailsKey,
                                 subDetailsValue["number_sent"], details_billable])
 
-        #for items in rows:
+        # for items in rows:
         #    print(items)
 
         if result:
