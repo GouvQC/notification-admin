@@ -132,7 +132,7 @@ def test_create_new_organisation(
 
     mock_create_organisation.assert_called_once_with(
         name='new name',
-        sagir_code = 'new sagir code',
+        sagir_code='new sagir code',
         organisation_type='local',
         crown=False,
         agreement_signed=False,
