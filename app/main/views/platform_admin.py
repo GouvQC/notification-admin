@@ -17,8 +17,6 @@ from app import (
     service_api_client,
 )
 
-from app.models.organisation import Organisations
-
 from app.extensions import antivirus_client, redis_client
 from app.main import main
 from app.main.forms import (
@@ -29,6 +27,9 @@ from app.main.forms import (
     RequiredDateFilterForm,
     ReturnedLettersForm,
 )
+
+from app.models.organisation import Organisations
+
 from app.notify_client.api_key_api_client import api_key_api_client
 from app.statistics_utils import (
     get_formatted_percentage,
