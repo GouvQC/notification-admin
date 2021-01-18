@@ -25,13 +25,13 @@ from app.main.forms import (
     OrganisationCrownStatusForm,
     OrganisationDomainsForm,
     OrganisationOrganisationTypeForm,
+    OrganisationSagirCodeForm,
     PreviewBranding,
     RenameOrganisationForm,
     SearchByNameForm,
     SearchUsersForm,
     SetEmailBranding,
     SetLetterBranding,
-    OrganisationSagirCodeForm,
 )
 from app.main.views.service_settings import get_branding_as_value_and_label
 from app.models.organisation import Organisation, Organisations

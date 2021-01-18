@@ -16,19 +16,17 @@ from app import (
     platform_stats_api_client,
     service_api_client,
 )
-
-from app.models.organisation import Organisations
-
 from app.extensions import antivirus_client, redis_client
 from app.main import main
 from app.main.forms import (
     ClearCacheForm,
     DateFilterForm,
+    GetServicesByOrganisationForm,
     PDFUploadForm,
     RequiredDateFilterForm,
     ReturnedLettersForm,
-    GetServicesByOrganisationForm,
 )
+from app.models.organisation import Organisations
 from app.notify_client.api_key_api_client import api_key_api_client
 from app.statistics_utils import (
     get_formatted_percentage,
@@ -331,7 +329,7 @@ def usage_for_all_services():
         if rows:
             return Spreadsheet.from_rows([headers] + rows).as_csv_data, 200, {
                 'Content-Type': 'text/csv; charset=utf-8',
-                'Content-Disposition': 'attachment; filename="Usage for all services by organisation from {} to {}.csv"'.format(
+                'Content-Disposition': 'attachment; filename="Usage for all services from {} to {}.csv"'.format(
                     start_date, end_date
                 )
             }
@@ -344,31 +342,54 @@ def usage_for_all_services():
 @user_is_platform_admin
 def usage_for_all_services_by_organisation():
     form = GetServicesByOrganisationForm()
-    form.organisations.choices = [(org.id, org.name) for org in Organisations()]
+    list_organisation = [("", "Tous")]
+
+    for org in Organisations():
+        list_organisation.append(tuple((org.id, org.name)))
+
+    form.organisations.choices = list_organisation
 
     if form.validate_on_submit():
         organisation_id = form.organisations.data
         start_date = form.start_date.data
         end_date = form.end_date.data
 
-        headers = ["organisation_id", "organisation_name", "service_id", "service_name",
-                   "sms_cost", "sms_fragments", "letter_cost", "letter_breakdown"]
+        headers = ["Start Date", "End Date", "Organisation ID", "Organisation name", "Sagir Code", "Service ID", "Service Name",
+                   "Restricted", "Details Type", "Provider Name", "Number Sent", "Billable units"]
 
         result = billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
-        rows = [
-            [
-                r['organisation_id'], r["organisation_name"], r["service_id"], r["service_name"],
-                r["sms_cost"], r['sms_fragments'], r["letter_cost"], r["letter_breakdown"].strip()
-            ]
-            for r in result
-        ]
-        if rows:
-            return Spreadsheet.from_rows([headers] + rows).as_csv_data, 200, {
-                'Content-Type': 'text/csv; charset=utf-8',
-                'Content-Disposition': 'attachment; filename="Usage for all services from {} to {}.csv"'.format(
+
+        rows = []
+        for key, value in result["data"]["PGNUtilization"]["Organisations"].items():
+            for servKey, servValue in value["services"].items():
+                details = {}
+                if servValue["email_details"] != {}:
+                    details["email"] = servValue["email_details"]
+
+                if servValue["sms_details"] != {}:
+                    details["sms"] = servValue["sms_details"]
+
+                for detailsKey, detailsValue in details.items():
+                    for subDetailsKey, subDetailsValue in detailsValue["providers"].items():
+                        if detailsKey == "sms":
+                            details_type = "SMS"
+                            details_billable = subDetailsValue["billable_units"]
+                        else:
+                            details_type = "Email"
+                            details_billable = "N/A"
+
+                    rows.append([str(start_date), str(end_date), value["organisation_id"], key, value["sagir_code"],
+                                servValue["service_id"], servKey, servValue["restricted"], details_type, subDetailsKey,
+                                subDetailsValue["number_sent"], details_billable])
+
+        if result:
+            return Spreadsheet.from_rows([headers] + rows).as_excel_file, 200, {
+                'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition': 'attachment; filename="Usage for all services by organisation from {} to {}.xlsx"'.format(
                     start_date, end_date
                 )
             }
+
         else:
             flash('No results for dates')
 

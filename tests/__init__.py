@@ -207,6 +207,7 @@ def organisation_json(
     agreement_signed_on_behalf_of_email_address=None,
     organisation_type='',
     request_to_go_live_notes=None,
+    sagir_code=False
 ):
     if users is None:
         users = []
@@ -232,6 +233,7 @@ def organisation_json(
         'domains': domains or [],
         'request_to_go_live_notes': request_to_go_live_notes,
         'count_of_live_services': len(services),
+        'sagir_code': 'Test Sagir Code' if sagir_code is False else sagir_code
     }
 
 

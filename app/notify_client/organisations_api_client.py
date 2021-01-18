@@ -57,7 +57,7 @@ class OrganisationsClient(NotifyAdminAPIClient):
 
     def update_organisation_name(self, org_id, name):
         return self.update_organisation(org_id, name=name)
-    
+
     def update_organisation_sagir_code(self, org_id, sagir_code):
         return self.update_organisation(org_id, sagir_code=sagir_code)
 

@@ -88,6 +88,7 @@ def test_page_to_create_new_organisation(
         for input in page.select('input')
     ] == [
         ('text', 'name', ''),
+        ('text', 'sagir_code', ''),
         ('radio', 'organisation_type', 'central'),
         ('radio', 'organisation_type', 'local'),
         ('radio', 'organisation_type', 'nhs_central'),
@@ -118,6 +119,7 @@ def test_create_new_organisation(
         '.add_organisation',
         _data={
             'name': 'new name',
+            'sagir_code': 'new sagir code',
             'organisation_type': 'local',
             'crown_status': 'non-crown',
         },
@@ -130,6 +132,7 @@ def test_create_new_organisation(
 
     mock_create_organisation.assert_called_once_with(
         name='new name',
+        sagir_code='new sagir code',
         organisation_type='local',
         crown=False,
         agreement_signed=False,
@@ -255,6 +258,7 @@ def test_organisation_settings_for_platform_admin(
     expected_rows = [
         'Label Value Action',
         'Name Org 1 Change',
+        'SAGIR Code Test Sagir Code Change',
         'Sector Not set Change',
         'Crown organisation Yes Change',
         'GC Notify data sharing and financial agreement Not signed Change',

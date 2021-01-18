@@ -14,8 +14,10 @@ RUN set -ex && mkdir /app
 WORKDIR /app
 
 COPY ./requirements.txt /app
+COPY ./requirements_for_test.txt /app
 
 RUN set -ex && pip3 install -r requirements.txt
+RUN set -ex && pip3 install -r requirements_for_test.txt
 
 COPY ./package.json /app
 
