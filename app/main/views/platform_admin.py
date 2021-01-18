@@ -3,10 +3,6 @@ import re
 from collections import OrderedDict
 from datetime import datetime
 
-from flask import abort, flash, redirect, render_template, request, url_for
-from notifications_python_client.errors import HTTPError
-from requests import RequestException
-
 from app import (
     billing_api_client,
     complaint_api_client,
@@ -16,7 +12,6 @@ from app import (
     platform_stats_api_client,
     service_api_client,
 )
-
 from app.extensions import antivirus_client, redis_client
 from app.main import main
 from app.main.forms import (
@@ -27,9 +22,7 @@ from app.main.forms import (
     RequiredDateFilterForm,
     ReturnedLettersForm,
 )
-
 from app.models.organisation import Organisations
-
 from app.notify_client.api_key_api_client import api_key_api_client
 from app.statistics_utils import (
     get_formatted_percentage,
@@ -44,6 +37,9 @@ from app.utils import (
     user_has_permissions,
     user_is_platform_admin,
 )
+from flask import abort, flash, redirect, render_template, request, url_for
+from notifications_python_client.errors import HTTPError
+from requests import RequestException
 
 COMPLAINT_THRESHOLD = 0.02
 FAILURE_THRESHOLD = 3
