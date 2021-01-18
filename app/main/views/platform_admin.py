@@ -3,6 +3,10 @@ import re
 from collections import OrderedDict
 from datetime import datetime
 
+from flask import abort, flash, redirect, render_template, request, url_for
+from notifications_python_client.errors import HTTPError
+from requests import RequestException
+
 from app import (
     billing_api_client,
     complaint_api_client,
@@ -33,17 +37,13 @@ from app.statistics_utils import (
 )
 from app.template_previews import validate_letter
 from app.utils import (
+    Spreadsheet,
     generate_next_dict,
     generate_previous_dict,
     get_page_from_request,
-    Spreadsheet,
     user_has_permissions,
     user_is_platform_admin,
 )
-
-from flask import abort, flash, redirect, render_template, request, url_for
-from notifications_python_client.errors import HTTPError
-from requests import RequestException
 
 COMPLAINT_THRESHOLD = 0.02
 FAILURE_THRESHOLD = 3
@@ -362,8 +362,6 @@ def usage_for_all_services_by_organisation():
 
         result = billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
 
-        # print('JSON DUMP : ' + json.dumps(result), flush=True)
-
         rows = []
         for key, value in result["data"]["PGNUtilization"]["Organisations"].items():
             for servKey, servValue in value["services"].items():
@@ -386,9 +384,6 @@ def usage_for_all_services_by_organisation():
                     rows.append([str(start_date), str(end_date), value["organisation_id"], key, value["sagir_code"],
                                 servValue["service_id"], servKey, servValue["restricted"], details_type, subDetailsKey,
                                 subDetailsValue["number_sent"], details_billable])
-
-        # for items in rows:
-        #    print(items)
 
         if result:
             return Spreadsheet.from_rows([headers] + rows).as_excel_file, 200, {
