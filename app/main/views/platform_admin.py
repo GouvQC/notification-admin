@@ -3,6 +3,10 @@ import re
 from collections import OrderedDict
 from datetime import datetime
 
+from flask import abort, flash, redirect, render_template, request, url_for
+from notifications_python_client.errors import HTTPError
+from requests import RequestException
+
 from app import (
     billing_api_client,
     complaint_api_client,
@@ -37,9 +41,6 @@ from app.utils import (
     user_has_permissions,
     user_is_platform_admin,
 )
-from flask import abort, flash, redirect, render_template, request, url_for
-from notifications_python_client.errors import HTTPError
-from requests import RequestException
 
 COMPLAINT_THRESHOLD = 0.02
 FAILURE_THRESHOLD = 3
