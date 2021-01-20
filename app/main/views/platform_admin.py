@@ -382,7 +382,7 @@ def usage_for_all_services_by_organisation():
                         rows.append([str(start_date), str(end_date), value["organisation_id"], key, value["sagir_code"],
                                     servValue["service_id"], servKey, servValue["restricted"], details_type, subDetailsKey,
                                     subDetailsValue["number_sent"], details_billable])
-       
+
             return Spreadsheet.from_rows([headers] + rows).as_excel_file, 200, {
                 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition': 'attachment; filename="Usage for all services by organisation from {} to {}.xlsx"'.format(
