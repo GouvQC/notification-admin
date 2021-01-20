@@ -360,29 +360,29 @@ def usage_for_all_services_by_organisation():
         result = billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
 
         rows = []
-        for key, value in result["data"]["PGNUtilization"]["Organisations"].items():
-            for servKey, servValue in value["services"].items():
-                details = {}
-                if servValue["email_details"] != {}:
-                    details["email"] = servValue["email_details"]
-
-                if servValue["sms_details"] != {}:
-                    details["sms"] = servValue["sms_details"]
-
-                for detailsKey, detailsValue in details.items():
-                    for subDetailsKey, subDetailsValue in detailsValue["providers"].items():
-                        if detailsKey == "sms":
-                            details_type = "SMS"
-                            details_billable = subDetailsValue["billable_units"]
-                        else:
-                            details_type = "Email"
-                            details_billable = "N/A"
-
-                    rows.append([str(start_date), str(end_date), value["organisation_id"], key, value["sagir_code"],
-                                servValue["service_id"], servKey, servValue["restricted"], details_type, subDetailsKey,
-                                subDetailsValue["number_sent"], details_billable])
-
         if result:
+            for key, value in result["PGNUtilization"]["Organisations"].items():
+                for servKey, servValue in value["services"].items():
+                    details = {}
+                    if servValue["email_details"] != {}:
+                        details["email"] = servValue["email_details"]
+
+                    if servValue["sms_details"] != {}:
+                        details["sms"] = servValue["sms_details"]
+
+                    for detailsKey, detailsValue in details.items():
+                        for subDetailsKey, subDetailsValue in detailsValue["providers"].items():
+                            if detailsKey == "sms":
+                                details_type = "SMS"
+                                details_billable = subDetailsValue["billable_units"]
+                            else:
+                                details_type = "Email"
+                                details_billable = "N/A"
+
+                        rows.append([str(start_date), str(end_date), value["organisation_id"], key, value["sagir_code"],
+                                    servValue["service_id"], servKey, servValue["restricted"], details_type, subDetailsKey,
+                                    subDetailsValue["number_sent"], details_billable])
+
             return Spreadsheet.from_rows([headers] + rows).as_excel_file, 200, {
                 'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition': 'attachment; filename="Usage for all services by organisation from {} to {}.xlsx"'.format(
