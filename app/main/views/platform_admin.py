@@ -4,6 +4,7 @@ from collections import OrderedDict
 from datetime import datetime
 
 from flask import abort, flash, redirect, render_template, request, url_for
+from flask_babel import lazy_gettext as _l
 from notifications_python_client.errors import HTTPError
 from requests import RequestException
 
@@ -45,6 +46,10 @@ from app.utils import (
 COMPLAINT_THRESHOLD = 0.02
 FAILURE_THRESHOLD = 3
 ZERO_FAILURE_THRESHOLD = 0
+
+
+def translate(text):
+    return str(_l(text))
 
 
 @main.route("/platform-admin")
@@ -354,8 +359,8 @@ def usage_for_all_services_by_organisation():
         start_date = form.start_date.data
         end_date = form.end_date.data
 
-        headers = ["Start Date", "End Date", "Organisation ID", "Organisation name", "Sagir Code", "Service ID", "Service Name",
-                   "Restricted", "Details Type", "Provider Name", "Number Sent", "Billable units"]
+        headers = [translate("Start Date"), translate("End Date"), translate("Organisation ID"), translate("Organisation name"), translate("Sagir Code"), translate("Service ID"), 
+                   translate("Service Name"), translate("Restricted"), translate("Details Type"), translate("Provider Name"), translate("Number Sent"), translate("Billable Units")]
 
         result = billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
 
