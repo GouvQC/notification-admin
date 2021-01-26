@@ -360,7 +360,7 @@ def usage_for_all_services_by_organisation():
         end_date = form.end_date.data
 
         headers = [translate("Start Date"), translate("End Date"), translate("Organisation ID"), translate("Organisation name"), translate("Sagir Code"), translate("Service ID"), 
-                   translate("Service Name"), translate("Restricted"), translate("Details Type"), translate("Provider Name"), translate("Number Sent"), translate("Billable Units")]
+                   translate("Service name"), translate("Restricted"), translate("Details Type"), translate("Provider Name"), translate("Number Sent"), translate("Billable Units")]
 
         result = billing_api_client.get_usage_for_all_services_by_organisation(organisation_id, start_date, end_date)
 
@@ -385,7 +385,7 @@ def usage_for_all_services_by_organisation():
                                 details_billable = "N/A"
 
                         rows.append([str(start_date), str(end_date), value["organisation_id"], key, value["sagir_code"],
-                                    servValue["service_id"], servKey, servValue["restricted"], details_type, subDetailsKey,
+                                    servValue["service_id"], servKey, translate("Trial") if servValue["restricted"] else translate("Live"), details_type, subDetailsKey,
                                     subDetailsValue["number_sent"], details_billable])
 
             return Spreadsheet.from_rows([headers] + rows).as_excel_file, 200, {
