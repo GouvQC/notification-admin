@@ -85,8 +85,8 @@ class Config(object):
     ACTIVITY_STATS_LIMIT_DAYS = 7
     TEST_MESSAGE_FILENAME = 'Report'
     NOTIFY_ENVIRONMENT = 'development'
-    LOGO_UPLOAD_BUCKET_NAME = os.getenv('ASSET_UPLOAD_BUCKET_NAME', 'pgn-qc-ca-asset-upload')
-    ASSET_DOMAIN = os.getenv('ASSET_DOMAIN', 's3.ca-central-1.amazonaws.com')
+    LOGO_UPLOAD_BUCKET_NAME = os.getenv('ASSET_UPLOAD_BUCKET_NAME', 'dev-cdn-notification-gouv-qc-ca-dev-data-bucket')
+    ASSET_DOMAIN = os.getenv('ASSET_DOMAIN', 'dev.cdn.pgn-rq.pocpdm.ca')
     MOU_BUCKET_NAME = os.getenv('MOU_BUCKET_NAME', '')
     ROUTE_SECRET_KEY_1 = os.environ.get('ROUTE_SECRET_KEY_1', '')
     ROUTE_SECRET_KEY_2 = os.environ.get('ROUTE_SECRET_KEY_2', '')
